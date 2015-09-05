@@ -1,0 +1,72 @@
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+            <div class="row">
+            <div class="col-md-8">
+                    <div class="panel">
+                        <header class="panel-heading clearfix">
+                            <span>Conversstion</span>
+                            <h4 class="ng-binding" style="float: right;">{{chatting.chatUser.firstname +" "+chatting.chatUser.lastname}}</h4>
+                        </header>
+                        <div class="panel-body"  ng-if="chatting.isChatting">
+                            <ul class="chats cool-chat">
+                                <li ng-repeat="chat in chatting.chat|orderBy:'id': flase"  class="{{(chat.senderid!=user.id)?'in':'out'}}">
+                                    <img src="{{(chat.senderid!=user.id)?(chatting.chatUser.profilepic):(user.profilepic)}}" alt="" class="avatar">
+                                    <div class="message">
+                                        <span class="arrow"></span>
+                                        <a class="name" href="javascript:void(0);">{{(chat.senderid!=user.id)?(chatting.chatUser.firstname+" "+chatting.chatUser.lastname):(user.firstname+" "+user.lastname)}}</a>
+                                        <span class="datetime">{{convertTime(chat.createdAt)}}</span>
+                                        <span class="body">
+                                            {{chat.message}}
+                                        </span>
+                                    </div>
+                                </li>
+                                <!--
+                                <li class="out">
+                                    <img src="{{(user.profilepic!='')?user.profilepic:'/images/dummy.png'}}" alt="" class="avatar">
+                                    <div class="message">
+                                        <span class="arrow"></span>
+                                        <a class="name" href="#/people" ng-click="viewProfile(user.id)">{{user.firstname+" "+user.lastname}}</a>
+                                        <span class="datetime">at Mar 12, 2014 6:13</span>
+                                        <span class="body">
+                                            sed diam nonummy nibh euismod tincidunt ut
+                                        </span>
+                                    </div>
+                                </li>
+                                -->
+                            </ul>
+                            <div class="chat-form ">
+                                <form role="form" class="form-inline" ng-submit="sendIm();">
+                                    <div class="form-group">
+                                        <input type="text" style="width: 100%" placeholder="Type a message here..." class="form-control" ng-model="chatting.message">
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Send</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel">
+                        <header class="panel-heading">
+                            Users
+                        </header>
+                        <div class="panel-body">
+                            <ul class="chats cool-chat">
+                                <li ng-repeat="u in users" class="{{($index%2==0)?'in':'out'}}" ng-if="u.id != user.id">
+                                    <a href="javascript:void(0);" ng-click="startChat(u)">
+                                    <div class="users clearfix">
+                                        <img src="/images/dummy.png" alt="" class="avatar">
+                                        <h1 class="name">{{u.firstname+" "+u.lastname}}</h1>    
+                                        <span class="datetime">{{u.createdAt}}</span>
+                                      </div>
+                                    </a>
+                                </li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--body wrapper end-->

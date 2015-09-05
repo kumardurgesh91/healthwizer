@@ -1,0 +1,461 @@
+    <section class="wrapper" >
+        <!-- page start-->
+
+        <div class="row">
+        
+        	
+            <div class="col-sm-12">
+            	<div class="row">
+          		   <div class="right_cont" style="min-height:500px;">
+                
+                	
+                    
+                    <div class="library_cont clearfix">
+                    	<div class="library_cont_box pull-left">
+                         <a data-toggle="modal" class="das_btns pull-left"><span class="dasbtn_label">Project</span>
+                                     <span class="das_btn_icons">
+                                    <img src="images/pluse_icon.png"  alt=""></span></a>
+                        	
+	                    	
+        				</div> 
+                        
+                        <div class="pull-right">
+                        	<div class="toggle-right-box">
+                <div class="fa fa-bars"></div>
+            </div>
+                        
+                        </div>           
+                    </div>
+                    <div class="ibrary_header">
+	                   <div class="col-md-6, col-sm-6 col-xs-12">
+	                        <h1>My Project</h1>
+                        </div>
+                        
+                       <div class="col-md-6, col-sm-6 col-xs-12">
+                       		<div class="das_sp_icons pull-right">
+	                       		<a href="javascript:;" class="das_btns sp_dasicons add_usericon">Add User</a>
+                                <a href="/project_management" class="das_btns sp_dasicons add_alerticon">Alert</a>
+                                <a href="javascript:;" class="das_btns sp_dasicons add_menuicon">Menu</a>
+                                <a href="javascript:;" class="das_btns sp_dasicons add_moreicon">More</a>
+                            </div>
+                       
+                       </div>
+                       
+                       <div class="clr"></div>
+                    </div> 
+                        
+                    
+                    <div class="das_alllist_cont">
+                    
+                    
+                    	 
+                         	<div class="das_alllist_header">
+                               <div class="col-md-12, col-sm-12 col-xs-12">
+									
+                                    <div class="das_btns clearfix pull-left">
+                                            <div class="dasbtn_label"><span>Create</span>
+                                            
+                                           		 <div class="doc_mode">
+                                                <ul>
+                                                    <li><a href="#myModal" data-toggle="modal">Project</a></li>
+                                                    <li><a href="javascript:;">Citation List</a></li>
+                                                    <li><a href="javascript:;">Data Table</a></li>
+                                                    <li><a href="javascript:;">Folder</a></li>
+                                                
+                                                </ul>
+                                            
+                                            </div>
+                           		 			 </div> 
+                         		
+                                  			 <div class="das_btn_icons">
+                            	 <img src="images/arrow_up.png" alt="">
+                                 <input type="file" class="ak_upload">
+                             </div>
+                      		 		 </div>
+                                    
+                                    
+                                    
+                                    
+                                   
+                                    
+                                    <div class="search_library">
+                                    	
+                                    	<input type="text" placeholder="Search Library" ng-model="search">
+                                 	    <input  type="image" src="images/search_icon1.png" class="lib_searchicon">
+                                    </div>
+                                    
+                                   <div class="show_all_labopt">
+                                    
+                                    	
+                                    
+                                    </div>
+                                    
+                                    <div class="resp_clr"></div>
+                                    
+                                    
+                                    <div class="das_group_btns">
+                                    	<ul>
+                                        	<li><a href="javascript:;"><span class="citations_icon">Citations</span></a></li>
+                                            <li><a href="javascript:;"><span class="data_sheet_icon">Data Sheet </span></a></li>
+                                             <li><a href="javascript:;"><span class="documents_icon">Documents</span></a></li>
+                                        
+                                        </ul>
+                                    
+                                    </div>
+                                    
+                                    
+                                    <div class="das_shorted">
+                                    	<label>Sort By:</label>
+                                        
+                                        <div class="drop_down shortby_opt">
+                                                <select id="shortedby">
+                                                    <option>--Select--</option>
+                                                    <option>Table Headers</option>
+                                                </select>
+                                        </div>
+                                    
+                                    </div>
+                                    
+                                    
+                                </div>
+                                
+                               
+                               
+                               <div class="clr"></div>
+                         
+                    </div> 
+                    
+                    		<div class="library_list_cont"  data-ng-init = "findprojects()" >
+                            
+                            	
+										
+										
+                 				<table class="table table-striped">
+                                          <thead>
+                                                <tr>
+                                                  <th class="project_tbcellh1"></th>
+                                                  <th class="project_tbcellh2"></th>
+                                                  <th class="project_tbcellh3">Name</th>
+                                                  <th class="project_tbcellh4">Creater</th>
+                                                  <th class="project_tbcellh5">Projects</th>
+                                                  <th class="project_tbcellh6">Last Modefied</th>
+                                                </tr>
+                                          </thead>
+										  
+										  </table>
+										  <div ng-repeat="project in projects | filter:search | orderBy:'type':false">
+											  
+										 <table class="table table-striped">
+											 
+											  <tbody>
+												  <tr >
+													  <td class="project_tbcell1"><input type="checkbox"></td>
+														  <td class="project_tbcell2" ng-click = "findprojectsfiles(project.id)"><img src="images/daslist_foldericon.png" alt=""></td>
+														  <td class="pra_pro project_tbcell3"> <div > <a ng-click = "findprojectAtt(project.id)" href="javascript:;">{{project.projectname }}</a></div>
+														 
+														  </td>
+														  
+														  <td class="project_tbcell4">{{project.username }}</td>
+														  <td class="project_tbcell5">....<td>
+														  
+														  <td class="project_tbcell6"> {{convertTime(project.updatedAt) }}</td>
+														  
+													</tr>
+													
+													
+												  
+												  
+												  
+												</tbody>
+												
+											</table>
+											
+											
+											
+											<div class="inner_fils">
+												<div ng-repeat="file in fileArr[project.id] " >
+													
+													<table class="table table-striped" >
+														  
+														  <tbody >
+															  
+															  <tr>
+																  <td class="project_tbcell1">&nbsp;</td>
+														  <td class="project_tbcell2"><img src="images/file_icon.png" alt=""></td>
+														  <td class="project_tbcell3"><a href="{{file.filepath}}">													   {{file.filename }}</a></td>
+																  <td class="project_tbcell4" >{{file.creater}}</td>
+																  <td class="project_tbcell5">&nbsp;</td>
+																  
+																  <td class="project_tbcell6">{{convertTime(file.updatedAt) }}</td>
+																  
+																  
+															  </tr>
+															  
+														  </tbody>
+														  
+													  </table>
+													</div>
+													
+												</div>
+											
+											
+									 
+									</div>
+									                   
+                                     
+                            
+                            </div>
+                    	
+                    
+                    </div>
+                
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- page end-->
+        </section>
+    </section>
+    <!--main content end-->
+	
+<!--right sidebar start-->
+<div class="right-sidebar">
+<div class="search-row">
+    <input type="text" placeholder="Search" class="form-control" >
+</div>
+<div class="right-stat-bar">
+<ul class="right-side-accordion">
+<li class="widget-collapsible">
+    <a href="#" class="head widget-head red-bg active clearfix">
+        <span class="pull-left">Task Tracker</span>
+        <span class="pull-right widget-collapse"><i class="ico-minus"></i></span>
+    </a>
+    <ul class="widget-container">
+        <li>
+            <div class="prog-row side-mini-stat clearfix">
+                <div class="side-graph-info">
+                    <h4>Target sell</h4>
+                    <p>
+                        25%, Deadline 12 june 13
+                    </p>
+                </div>
+                <div class="side-mini-graph">
+                    <div class="target-sell">
+                    </div>
+                </div>
+            </div>
+            <div class="prog-row side-mini-stat">
+                <div class="side-graph-info">
+                    <h4>product delivery</h4>
+                    <p>
+                        55%, Deadline 12 june 13
+                    </p>
+                </div>
+                <div class="side-mini-graph">
+                    <div class="p-delivery">
+                        <div class="sparkline" data-type="bar" data-resize="true" data-height="30" data-width="90%" data-bar-color="#39b7ab" data-bar-width="5" data-data="[200,135,667,333,526,996,564,123,890,564,455]">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="prog-row side-mini-stat">
+                <div class="side-graph-info payment-info">
+                    <h4>payment collection</h4>
+                    <p>
+                        25%, Deadline 12 june 13
+                    </p>
+                </div>
+                <div class="side-mini-graph">
+                    <div class="p-collection">
+						<span class="pc-epie-chart" data-percent="45">
+						<span class="percent"></span>
+						</span>
+                    </div>
+                </div>
+            </div>
+            <div class="prog-row side-mini-stat">
+                <div class="side-graph-info">
+                    <h4>delivery pending</h4>
+                    <p>
+                        44%, Deadline 12 june 13
+                    </p>
+                </div>
+                <div class="side-mini-graph">
+                    <div class="d-pending">
+                    </div>
+                </div>
+            </div>
+            <div class="prog-row side-mini-stat">
+                <div class="col-md-12">
+                    <h4>total progress</h4>
+                    <p>
+                        50%, Deadline 12 june 13
+                    </p>
+                    <div class="progress progress-xs mtop10">
+                        <div style="width: 50%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" class="progress-bar progress-bar-info">
+                            <span class="sr-only">50% Complete</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div style="width:240px; display:block;"></div>
+</li>
+<li class="widget-collapsible">
+    <a href="#" class="head widget-head terques-bg active clearfix">
+        <span class="pull-left">Colleague Menu </span>
+        <span class="pull-right widget-collapse"><i class="ico-minus"></i></span>
+    </a>
+  
+</li>
+<li class="widget-collapsible">
+    <a href="#" class="head widget-head purple-bg active">
+        <span class="pull-left"> Active Tracker</span>
+        <span class="pull-right widget-collapse"><i class="ico-minus"></i></span>
+    </a>
+    
+    </ul>-->
+</li>
+<li class="widget-collapsible">
+    <a href="#" class="head widget-head yellow-bg active">
+        <span class="pull-left">Project Progress</span>
+        <span class="pull-right widget-collapse"><i class="ico-minus"></i></span>
+    </a>
+   
+</li>
+</ul>
+</div>
+</div>
+<!--right sidebar end-->
+
+</section>
+ <%- partial('partials/footer')%>
+
+
+
+ <!-- Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade" >
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Create New Project</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                          
+                          <form role="form-horizontal" id="projectform" >
+                                
+								 <div class="form-group">	
+                                     <p>Enter The Project Name</p>
+                                      <input type="text" id="pro_name"  name="pro_name" id placeholder="Project Name"  class="form-control placeholder-no-fix">
+								</div>
+                                
+                               
+
+                                <div class="compose-editor">
+                                	<p>Discription</p>
+                                    <textarea class="wysihtml5 form-control" rows="9" id="pro_desc"></textarea>
+                                   
+                                </div>
+								
+								<div id="upload" class="project_upload">
+                      
+									<div id="drop" class="project_drop" >
+										<span>Drop Here</span><strong>&nbsp;</strong>
+
+										<a>Browse</a>
+										<input type="file" name="projectfile" id="projectfile" multiple />
+									</div>
+
+									<ul>
+										<!-- The file uploads will be shown here -->
+									</ul>
+
+								</div>
+								 <div class="form-group">
+                                 	<div class="Pro_type">
+                                    	<select id="project_mode">
+                                        	<option value="none">--Select--</option>
+                                            <option value="open">Open</option>
+                                            <option value="private">Private</option>
+                                        
+                                        </select>
+                                    
+                                    </div>
+                                 
+                                 </div>
+                                
+                                  <div class="form-group open_drop">
+                                 	<div class="Pro_type">
+                                    	<select id="pro_type">
+                                        	<option value="none">--Select--</option>
+                                            <option value="0">Commercial & Modifiable</option>
+                                            <option value="1">Commercial & Modifiable-Alike</option>
+                                            <option value="2">Commercial & Not Modifiable</option>
+                                            <option value="3">Not Commercial & Modifiable</option>
+                                            <option value="4">Not Commercial & Modifiable-Alike</option>
+                                            <option value="5">Not Commercial & Not Modifiable</option>
+                                                                                    
+                                        </select>
+                                    
+                                    </div>
+                                 
+                                 </div>
+								 
+                                
+
+                            </form>
+                          
+                          
+
+                      </div>
+                      <div class="modal-footer">
+                          <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="createProject()">Create A project </button>
+                          <button type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- modal -->
+
+<script>
+var username= "<%= user.username %>";
+var projects;
+var UPLOAD_PATH = './assets/images/uploadfiles';
+var filepath;
+var filename;
+
+
+ $('.wysihtml5').wysihtml5();
+$(document).ready(function(e) {		
+		
+	//convert
+	$("select").msDropdown({roundedBorder:false});
+	
+	$('#project_mode').change(function(){
+	
+	var project_mode_val = $('#project_mode option:selected').text();
+	
+		if(project_mode_val == 'Open')
+			{
+				$('.open_drop').show();
+				var oDropdown1 = $("#Pro_type").msDropdown().data("dd");
+			oDropdown1.set("selectedIndex", 0);
+			
+			}
+			else{
+			
+				$('.open_drop').hide();
+			
+			}
+	
+	});
+
+});
+
+
+
+//
+</script>

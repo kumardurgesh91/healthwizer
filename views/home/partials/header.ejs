@@ -1,0 +1,163 @@
+ <header class="header fixed-top clearfix">
+         
+            
+            <div class="nav notify-row" id="top_menu">
+            
+            
+            	  
+             
+                  <ul class="nav top-menu">
+                  
+                  		<li><div class="sidebar-toggle-box">
+                    <div class="fa fa-bars"></div>
+                </div></li>
+                      <li>
+                        <input type="text" class="form-control top_search" placeholder=" Search">
+                    </li>
+                    
+                    
+                    
+              
+                    
+                </ul>
+                
+                 
+            </div>
+               
+            <div class="top_rsec">
+            	<div class="sec_triger">
+                	<div class="user_trigericon">
+                    <div class="fa fa-user"></div>
+                </div>
+                	
+                
+                </div>
+          	 
+           	   <div class="top-nav clearfix">
+            
+            
+                
+                
+                <!--search & user info start-->
+                <ul class="nav pull-right top-menu mob_r">
+                   
+                    <!-- user login dropdown start-->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <img alt="" src=<%= user.profilepic %> alt=""/>
+                            <span class="username"><%= user.username %></span>
+                           
+                         <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+                            <li><a href="/profile"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                            <li><a href="/profilesetting"><i class="fa fa-cog"></i> Settings</a></li>
+                            <li><a href="/logout"><i class="fa fa-key"></i> Log Out</a></li>
+                        </ul>
+                      
+                    </li>
+                    <!-- user login dropdown end -->
+                    
+                    <li class="feed_backbtn"><a href="#headermodal" data-toggle="modal">FeedBack</a></li>
+                    
+                </ul>
+                <!--search & user info end-->
+                
+                
+                
+                <!--  notification start -->
+                
+                <ul class="nav top-menu pull-right mob_l">
+                    <!-- settings start -->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="fa fa-tasks"></i>
+                            <span class="badge bg-success">0</span>
+                        </a>
+                        <ul class="dropdown-menu extended tasks-bar">
+                            <li>
+                                <p class="">You have no pending tasks</p>
+                            </li>
+                            
+            
+                            
+                        </ul>
+                    </li>
+                    <!-- settings end -->
+                    <!-- inbox dropdown start-->
+                    <li id="header_inbox_bar" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="badge bg-important">0</span>
+                        </a>
+                        <ul class="dropdown-menu extended inbox">
+                            <li>
+                                <p class="red">You have no Mails</p>
+                            </li>
+                            
+                         
+                        </ul>
+                    </li>
+                    <!-- inbox dropdown end -->
+                    <!-- notification dropdown start-->
+                    <li id="header_notification_bar" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            
+                            <i class="fa fa-bell-o"></i>
+                            <span class="badge bg-warning">0</span>
+                        </a>
+                        <ul class="dropdown-menu extended notification">
+                            <li>
+                                <p>You do not have any notifications</p>
+                            </li>
+                                       
+                        </ul>
+                    </li>
+                    <!-- notification dropdown end -->
+                </ul>
+                
+                 <!--  notification end -->
+              </div> 
+              
+            </div> 
+              
+            </header>
+            <!--header end-->
+			
+			<!-- Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="headermodal" class="modal fade" >
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title"> Send FeedBack</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                          
+                          <form role="form-horizontal" >
+                                
+								 <div class="form-group">	
+                                     <p>Please describe the issue you are experiencing:</p>
+                                       <textarea class="wysihtml5 form-control" rows="9" id="pro_desc34"></textarea>
+								</div>
+                                
+                               
+
+                              
+
+                                                          
+
+                            </form>
+                          
+                          
+
+                      </div>
+                      <div class="modal-footer">
+                          <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="sendEmail()">Send FeedBack </button>
+                          <button type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- modal -->

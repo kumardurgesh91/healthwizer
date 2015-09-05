@@ -1,0 +1,140 @@
+<div class="wrapper ng-scope">
+        <div class="row blog">
+        <div class="col-md-12">
+            <div class="blog">
+                <div class="single-blog">
+                   <div class="panel">
+                        <div class="panel-body">
+                            <!-- start note div -->
+                            <div class="all_note  Notes" id="note_div">
+                                <div class="new-note-wrap">
+                                    <div class="note-head clearfix" style="cursor:pointer">
+                                        <span class="head-text"><i class="fa fa-bell-o "></i> {{currentViewedTask.title}}</span>
+                                        <!-- <div class="pull-right link-count-wrap">
+                                            <a href="#" class="file-link"></a>
+                                            <a href="#" class="file-count">50</a>
+                                        </div> -->
+                                    </div>
+                                    <div class="row entry-wrap clearfix">
+                                        <div class="col-md-10 col-sm-12 col-xs-12 padd-left">
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <table cellpadding="10">
+                                                      <thead>
+                                                        <tr>
+                                                          <th>Project</th>
+                                                          <th>User</th>
+                                                          <th>Start date</th>
+                                                          <th>End date</th>
+                                                          <th>Created At</th>
+                                                          <th>Task Status</th>
+                                                          <th>Task Completion Status</th>
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        <tr>
+                                                          <td>{{currentViewedTask.project ? currentViewedTask.project.projectname : 'Not belong to any project'}}</td>
+                                                          <td>User</td>
+                                                          <td>{{currentViewedTask.startdate.split('T')[0]}}</td>
+                                                          <td>{{currentViewedTask.enddate.split('T')[0]}}</td>
+                                                          <td>{{convertTime(currentViewedTask.createdAt)}}</td>
+                                                          <td>{{currentViewedTask.detail.status}}</td>
+                                                          <td>{{currentViewedTask.detail.taskcompleted}}%</td>
+                                                        </tr>
+                                                      <tbody>
+
+                                                    </table>
+                                                    <!-- <span class="date-det"><strong> Project:</strong>
+                                                    {{currentViewedTask.project ? currentViewedTask.project.projectname : 'Not belong to any project'}}
+                                                    </span>
+                                                    <span class="date-det"><strong>Start date:</strong>
+                                                    {{currentViewedTask.startdate.split('T')[0]}}
+                                                    </span>
+                                                    <span class="date-det"><strong>End date:</strong>
+                                                    {{currentViewedTask.enddate.split('T')[0]}}
+                                                    </span>
+                                                    <span class="date-det"><strong>Created:</strong>
+                                                    {{convertTime(currentViewedTask.createdAt)}}
+                                                    </span> -->
+                                                </div>
+                                                <!-- <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <span>
+                                                        <strong>Current Status: </strong> {{currentViewedTask.detail.status}}
+                                                    </span>
+                                                    <span>
+                                                        <strong>Task Completed: </strong> {{currentViewedTask.detail.taskcompleted}}%
+                                                    </span>
+                                                </div> -->
+                                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                                    <a href="#" class="detail-img-name clearfix">
+                                                        <img src="{{currentViewedTask.assignedto.profilepic}}"/>
+                                                        <span> 
+                                                        {{currentViewedTask.assignedto.firstname}} {{currentViewedTask.assignedto.lastname}}
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-12 col-xs-12">
+                                            <a href="javascript:void(0);"  class="edit-entry" ng-if="!currentViewedTask.detail.isCompleted" ng-click="markTaskAsDoneUndone(currentViewedTask.id,currentViewedTask.detail.id, true)">Mark as done</a>
+
+                                            <a href="javascript:void(0);"  class="edit-entry" ng-if="currentViewedTask.detail.isCompleted" ng-click="markTaskAsDoneUndone(currentViewedTask.id,currentViewedTask.detail.id, false)">Undone</a>
+
+                                            <a href="javascript:void(0);" ng-click="initEditedTask(currentViewedTask.id)"  class="edit-entry" ng-if="isTaskCreate">Edit task</a>
+                                        </div>
+                                        
+                                        <div class="col-md-2 col-sm-12 col-xs-12" ng-if="isTaskCreate">
+                                            <a href="javascript:void(0);" ng-click="deleteTask(currentViewedTask.id)" class="edit-entry">Delete</a>
+                                        </div>
+
+
+                                        <div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"></div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+                                        <span dynamic="currentViewedTask.description"></span>
+                                            
+                                        </div>
+                                        
+                                        <div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+
+                                            <span class="news_feed_date">
+                                            <a href="javascript:;" id="taskComment" ng-click="opencommentbox('taskComment');getTaskCommnets();">Comments</a> * 2 days Ago
+                                            </span>
+                                            
+                                            <div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+
+
+                                                <div class="all_comments" >
+                                                    <div ng-repeat="comm in taskComments">
+                                                        <div class="detail-img-name recent-thumb bordbott clearfix">
+                                                        <img src="{{findProfilepicUrl(comm.createrid)}}" > 
+                                                        <span class="feed_user" dynamic="comm.creatername">
+                                                        </span><br>                         
+                                                        <p class="comdetails">{{comm.comment}}</p>
+                                                        <div class="date-time"> <a href="#">flag</a> posted on  {{convertTime(comm.createdAt)}} </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <img src="{{user.profilepic}}" > 
+                                                <textarea id="task_comment" placeholder="Comments..."></textarea>
+                                                <button class="btn btn-primary" type="submit" ng-click="createTaskCommnets()">Post</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end note div --> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+  
+<style>
+  table, th, td {
+    border: 4px double gray;
+    padding: 6px 12px;
+  }
+</style>

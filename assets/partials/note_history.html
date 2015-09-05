@@ -1,0 +1,129 @@
+<section class="wrapper" >
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="right_cont" style="min-height:500px;">
+          <div class="das_alllist_cont">
+            <div class="das_alllist_header">
+              <div class="col-md-12, col-sm-12 col-xs-12">
+                <h3>Version history for {{noteHistory[0].name}}</h3>
+              </div>
+              <div class="clr"></div>
+            </div> 
+            <div class="library_list_cont">
+                <div ng-repeat="history in noteHistory | orderBy : 'updatedAt' : true">
+                  <table class="table table-striped">
+                    <tbody>
+                      <tr>
+                        <td class="project_tbcellh4">v{{noteHistory.length-$index}}</td>
+                        <td class="project_tbcellh4">{{convertTime(history.updatedAt)}}</td>
+                        <td class="project_tbcellh4">Updated by <span dynamic="history.creater"> </span></td>
+                        <td class="project_tbcellh4">
+                          <a href="#myNote" data-toggle="modal" ng-click="showLabVersionDetail(history, 'note')" class="activity_link">Show</a>
+                        </td>
+                        <td class="project_tbcellh4"><span ng-if="history.current"> Current Version </span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- page end-->
+  </section>
+</section>
+
+</section>
+
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myNote" class="modal fade" >
+  <div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Note Detail</h4>
+    </div>
+    <form role="form-horizontal" id="createnoteform" >
+      <div class="modal-body">        
+      <div class="form-group">
+        <span class="note_type active_ntype">RAW DATA</span>
+        <span class="note_type">PROCESSED DATA</span>
+        <span class="note_type">FINAL DATA</span>
+      </div>
+          <div class="form-group">  
+            <p>Enter New Note here</p>
+            <input type="text" id="my_note"  name="my_note" id="my_note" placeholder="New Note"  class="form-control placeholder-no-fix">
+          </div>                  
+          <div class="form-group">
+            <p>Tags</p>
+            <div class="all_tags">
+              <div class="create_me">
+                <div class="tag_cont"></div>
+                <ul tagit  source="tagssuggestions" id="note_tags" class="tagit-field" targetitem="get_data_note"></ul>
+                <input type="text" style="display:none" id="get_data_note"/>
+              </div>
+              <div class="clr"></div>
+            </div>
+          </div>
+          <div class="compose-editor">
+        <p>Discription</p>
+        <textarea wysihtml5 class="form-control" rows="9" id="note_desc"></textarea>
+      </div>
+      
+
+      <div class="form-group" ng-if="labHistoryfiles.length > 0">
+        <p>Files</p>
+        <div style="display:inline-block; padding:20px;" ng-repeat="file in labHistoryfiles">
+                              
+            <a href="{{file.filepath}}">
+              <i class="fa {{file.filename | filesFilter}} fa-3x">
+              </i>
+              {{file.filename}}
+            </a>
+          </div>
+      </div>
+
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-default" type="button" ng-click="restoreLabBook(1)">Restore</button>
+      <button type="button" id="closecreatenote" class="btn btn-success" data-dismiss="modal" ng-click="removeEntry()" aria-hidden="true">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+var projects;
+var UPLOAD_PATH = './assets/images/uploadfiles';
+var filepath;
+var filename;
+
+$(document).ready(function(e) {     
+        
+    
+    $('#project_mode').change(function(){
+    
+    var project_mode_val = $('#project_mode option:selected').text();
+    
+        if(project_mode_val == 'Open')
+            {
+                $('.open_drop').show();
+                var oDropdown1 = $("#Pro_type").msDropdown().data("dd");
+            oDropdown1.set("selectedIndex", 0);
+            
+            }
+            else{
+            
+      $('.open_drop').hide();
+    }
+  });
+});
+
+
+
+//
+</script>

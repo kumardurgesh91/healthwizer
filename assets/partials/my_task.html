@@ -1,0 +1,145 @@
+<section class="wrapper" data-ng-init="getMyTask()">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="right_cont">
+          <div class="ibrary_header">
+            <div class="col-md-6, col-sm-6 col-xs-12">
+              <h1>My Task</h1>
+            </div>
+            <div class="col-md-6, col-sm-6 col-xs-12">
+              </div> -->
+            </div>
+            <div class="clr"></div>
+          </div> 
+          <div class="das_alllist_cont">
+            <div class="das_alllist_header">
+              <div class="col-md-12, col-sm-12 col-xs-12">
+                <a class="das_btns clearfix pull-left" href='#/create_task'>
+                  <div class="dasbtn_label">
+                    <span>Create</span>
+                    <!-- <div class="doc_mode">
+                      <ul>
+                        <li><a ng-click="resetProjectForm();" href="#myModal" data-toggle="modal">Project</a></li>
+                        <li><a ng-click="resetProjectForm();" href="javascript:;">Citation List</a></li>
+                        <li><a ng-click="resetProjectForm();" href="javascript:;">Data Table</a></li>
+                        <li><a ng-click="resetProjectForm();" href="javascript:;">Folder</a></li>
+                      </ul>
+                    </div> -->
+                  </div> 
+                  <!-- <div class="das_btn_icons">
+                    <img src="images/arrow_up.png" alt="">
+                    <input type="file" class="ak_upload" id="files_in_multiple_projects" onchange="angular.element(this).scope().uploadFilesInMultipleProject()" multiple>
+                  </div> -->
+                </a>
+                <!-- <div class="search_library">
+                  <input type="text" placeholder="Search Library" ng-model="search_p">
+                  <input  type="image" src="images/search_icon1.png" class="lib_searchicon">
+                </div> -->
+                <!-- <div class="show_all_labopt"></div>
+                <div class="resp_clr"></div>
+                <div class="das_group_btns">
+                  <ul>
+                    <li><a href="javascript:;"><span class="citations_icon">Citations</span></a></li>
+                    <li><a href="javascript:;"><span class="data_sheet_icon">Data Sheet </span></a></li>
+                     <li><a href="javascript:;"><span class="documents_icon">Documents</span></a></li>
+                  </ul>
+                </div> -->
+                <div class="das_shorted">
+                  <label>Sort By:</label>
+                  <div class="drop_down shortby_opt">
+                    <select msdropdown id="shortedby">
+                      <option>--Select--</option>
+                      <option>Table Headers</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="clr"></div>
+            </div> 
+            <div class="library_list_cont">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th class="project_tbcellh2"></th>
+                    <th class="project_tbcellh3">Title</th>
+                    <th class="project_tbcellh4">Project</th>
+                    <th class="project_tbcellh5">Assigned By</th>
+                    <th class="project_tbcellh6">Start Date</th>
+                    <th class="project_tbcellh5 center">End Date</th>                    
+                  </tr>
+                </thead>            
+              </table>
+                <div ng-repeat="myTask in myTasks | filter:search_p | orderBy:'type':false">
+                  <table class="table table-striped">
+                    <tbody>
+                      <tr ng-click="changePath('/view_task', myTask.id, 2)" style="cursor:pointer">
+                        <td class="project_tbcell2" style="cursor:pointer"><a href="javascript:void(0);"><i class="fa fa-bell-o "></i></a></td>
+                        <td class="pra_pro project_tbcell3"><div>
+                        <a href="javascript:void(0);">
+                        {{myTask.title}} 
+                        <span class="label label-danger" ng-if="!myTask.detail.isSeen">new</span></a></div></td>
+                        <td class="project_tbcell4"><a href="javascript:void(0);">{{myTask.project.projectname}}</a></td>
+                        <td class="project_tbcell5"><a href="javascript:void(0);">{{myTask.assignedby.firstname}} {{myTask.assignedby.lastname}}</a><td>
+                        <td class="project_tbcell6"> {{myTask.startdate.split('T')[0]}}</td>
+                        <td class="project_tbcell5">{{myTask.enddate.split('T')[0]}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div ng-if="gridView">
+                <div  style="display:inline-block; margin:20px;">
+                  <table>
+                    <tr>
+                      <td colspan="2"><i class="fa fa-folder-open-o fa-3x"></i></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span>
+                          <input ng-model="selectedProject[$index].status" ng-change="selectProject(project.id);" type="checkbox">
+                        </span>
+                        <span>
+                          <a ng-click="findprojectAtt(project)" href="#/project_workspace" class="active">{{project.projectname }}
+                          </a>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span style="display:inline-block;cursor:pointer">
+                          <a href="#projectFilesModel" data-toggle="modal" ng-click = "findprojectsfiles(project.id); projectFileId=project.id">
+                            <img src="images/daslist_foldericon.png" alt="">
+                          </a>
+                        </span>
+                        <span style="display:inline-block">
+                          <a href="#myModal" class="fa fa-edit" ng-click="editProject(project)" title="Edit" data-toggle="modal"></a>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span>
+                          {{project.username}}
+                        </span>
+                        |
+                        <span>
+                          {{convertTime(project.updatedAt)}}
+                        </span>
+                        </td>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- page end-->
+  </section>
+</section>
+  
+</section>
+  <!-- Modal -->

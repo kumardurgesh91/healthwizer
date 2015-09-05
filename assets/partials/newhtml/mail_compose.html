@@ -1,0 +1,138 @@
+        <section class="wrapper" data-ng-init="getEmails();">
+        <!-- page start-->
+        <div class="row">
+            <div class="col-sm-3">
+                <section class="panel">
+                  <div class="panel-body">
+                    <a href="javascript:void(0);" ng-click="resetComposeMail()"  class="btn btn-compose">
+                        Compose Mail
+                    </a>
+                    <ul class="nav nav-pills nav-stacked mail-nav">
+                      <li><a href="#/mail" ng-click="draftEmail()"> <i class="fa fa-inbox"></i> Inbox  <span class="label label-danger pull-right inbox-notification">{{newEmails}}</span></a></li>
+                      <li><a href="#/sent" ng-click="draftEmail()"> <i class="fa fa-envelope-o"></i> Send Mail</a></li>
+                      <li><a href="#/important" ng-click="draftEmail()"> <i class="fa fa-certificate"></i> Important</a></li>
+                      <li><a href="#/drafts" ng-click="draftEmail()"> <i class="fa fa-file-text-o"></i> Drafts <span class="label label-info pull-right inbox-notification">{{drafts.length}}</span></a></a></li>
+                      <li><a href="#/trash" ng-click="draftEmail()"> <i class="fa fa-trash-o"></i> Trash</a></li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section class="panel">
+                <ul class="nav nav-pills nav-stacked labels-info ">
+                  <li> <h4><a href="#/instantmessaging">Instant Messaging</a></h4> </li>
+                </ul>
+                <!--
+                    <div class="panel-body">
+                        <ul class="nav nav-pills nav-stacked labels-info ">
+                            <li> <h4>Buddy online</h4> </li>
+                            <li> <h4><a href="#/instantmessaging">Instant Messaging</a></h4> </li>                            
+                            <li> <a href="#"> <i class="fa fa-comments-o text-success"></i> Jonathan Smith <p>I do not think</p></a>  </li>
+                            <li> <a href="#"> <i class="fa fa-comments-o text-danger"></i> iRon <p>Busy with coding</p></a> </li>
+                            <li> <a href="#"> <i class="fa fa-comments-o text-muted "></i> Anjelina Joli <p>I out of control</p></a></li>
+                            <li> <a href="#"> <i class="fa fa-comments-o text-muted "></i> Samual Daren <p>I am not here</p></a></li>
+                            <li> <a href="#"> <i class="fa fa-comments-o text-muted "></i> Tis man <p>I do not think</p></a>  </li>
+                            
+                        </ul>
+                        <a href="#"> + Add More</a>
+
+                        <div class="inbox-body text-center inbox-action">
+                            <div class="btn-group">
+                                <a class="btn mini btn-default" href="javascript:;">
+                                    <i class="fa fa-power-off"></i>
+                                </a>
+                            </div>
+                            <div class="btn-group">
+                                <a class="btn mini btn-default" href="javascript:;">
+                                    <i class="fa fa-cog"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                -->
+                </section>
+            </div>
+            <div class="col-sm-9">
+                <section class="panel">
+                    <header class="panel-heading wht-bg">
+                       <h4 class="gen-case"> Compose Mail
+                        <form action="#" class="pull-right mail-src-position">
+                            <div class="input-append">
+                                <input type="text" class="form-control " placeholder="Search Mail">
+                            </div>
+                        </form>
+                       </h4>
+                    </header>
+                    <div class="panel-body">
+                        <div class="compose-btn pull-right">
+                            <a href="#/mail" ng-click="sendEmail()">
+                              <button class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Send</button>
+                            </a>
+                            <a href="#/mail">
+                                <button type="button" class="btn btn-sm"><i class="fa fa-times"></i> Discard</button>
+                              </a>
+                            <a href="#/drafts" ng-click="draftEmail();">
+                                <button type="button" class="btn btn-sm">Draft</button>
+                            </a>
+                        </div>
+                        <div class="compose-mail">
+                          <form ng-submit="sendEmail()" role="form-horizontal" method="post">
+                            <div class="form-group">
+                              <label for="to" class="">To:</label>
+                              <ul tagit source="usersuggestions" targetitem="to" id="to_tag" class="tagit-field"></ul>
+                              <input type="text" style="display:none" id="to" class="form-control">
+                              <div class="compose-options">
+                                <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>
+                                <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>
+                              </div>
+                            </div>
+                            <div class="form-group hidden">
+                              <label for="cc" class="">Cc:</label>
+                              <ul tagit source="usersuggestions" targetitem="cc" id="cc_tag" class="tagit-field"></ul>
+                              <input type="text" tabindex="2" style="display:none" id="cc" class="form-control">
+                            </div>
+                              <div class="form-group hidden">
+                                <label for="bcc" class="">Bcc:</label>
+                                <ul tagit source="usersuggestions" targetitem="bcc" id="bcc_tag" class="tagit-field"></ul>
+                                <input type="text" tabindex="2" style="display:none" id="bcc" class="form-control">
+                              </div>
+                              <div class="form-group">
+                                <label for="subject" class="">Subject:</label>
+                                <input type="text" tabindex="1" id="subject" class="form-control">
+                              </div>
+                              <div class="compose-editor">
+                                <textarea id="mail_body" wysihtml5 class="wysihtml5 form-control" rows="9"></textarea>
+                                <input id="attachments" type="file" class="default" multiple>
+                              </div>
+
+                              <div ng-if="draftToCompose.hasAttachments">
+                                <div class="alert  alert-dismissible attachmnet" role="alert" ng-repeat="attachement in draftToCompose.attachements">
+                                  <button type="button" ng-click="deleteAttachements(attachement.id)" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                  <strong>{{attachement.filename}}</strong>
+                                </div>
+                              </div>
+                              <div ng-if="forwaredEmail.hasAttachments">
+                                <div class="alert  alert-dismissible attachmnet" role="alert" ng-repeat="attachement in mailAttachements">
+                                  <button type="button" ng-click="removeForwaredAttachements(attachement.id)" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                  <strong>{{attachement.filename}}</strong>
+                                </div>
+                              </div>
+                              <div class="compose-btn" data-ng-init="composeDraftMail()">
+                                <a href="#/mail" ng-click="sendEmail()">
+                                 <button class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Send</button>
+                                </a>
+                                <a href="#/mail">
+                                  <button type="button" class="btn btn-sm"><i class="fa fa-times"></i> Discard</button>
+                                </a>
+                                <a href="#/drafts">
+                                  <button type="button" ng-click="draftEmail();" class="btn btn-sm">Draft</button>
+                                </a>
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- page end-->
+        </section>

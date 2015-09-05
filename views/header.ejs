@@ -1,0 +1,134 @@
+<header class="header fixed-top clearfix">
+  <div class="nav notify-row" id="top_menu">
+    <ul class="nav top-menu">
+      <li>
+        <div class="sidebar-toggle-box">
+          <div class="fa fa-bars"></div>
+          </div>
+      </li>
+      <li>
+          <input searchbox type="text" id="searchQuery" class="form-control top_search" placeholder="Search projects, parts and people">
+      </li>
+      <li class="feed_backbtn search-top"><a <a href="/#/searchresult" ng-click="search(0)" class="btn btn-primary" >Search</a></li>
+    </ul>
+  </div>
+  <div class="top_rsec">
+    <div class="sec_triger">
+      <div class="user_trigericon">
+        <div class="fa fa-user"></div>
+      </div>
+    </div>
+    <div class="top-nav clearfix">
+    <!--search & user info start-->
+    <ul class="nav pull-right top-menu mob_r">
+      <!-- user login dropdown start-->
+      <li class="dropdown">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
+          <img alt="" src=<%= user.profilepic %> alt=""/>
+          <span class="username"><%= user.username %></span>
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu extended logout">
+          <li><a href="#/profilesettings"><i class=" fa fa-suitcase"></i>Profile</a></li>
+          <li><a href="#/accountsettings"><i class="fa fa-cog"></i> Settings</a></li>
+          <li><a href="/logout"><i class="fa fa-key"></i> Log Out</a></li>
+        </ul>
+      </li>
+      <!-- user login dropdown end -->
+      <li class="feed_backbtn"><a href="#headermodal" data-toggle="modal">FeedBack</a></li>
+      <li class="feed_backbtn">
+        <div class="toggle-right-box">
+          <div class="fa fa-bars"></div>
+        </div>
+      </li>
+    </ul>
+    <!--search & user info end-->
+        <!--  notification start -->
+                <ul class="nav top-menu pull-right mob_l">
+                    <!-- settings start -->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="fa fa-tasks"></i>
+                            <span class="badge bg-success">{{unSeenTasks.length}}</span>
+                        </a>
+                        <ul class="dropdown-menu extended tasks-bar">
+                            <li>
+                                <p class="">You have <a href="/#/my_task">{{unSeenTasks.length}} new </a> tasks</p>
+                            </li>
+                           
+                        </ul>
+                    </li>
+                    <!-- settings end -->
+                    <!-- inbox dropdown start-->
+                    <li id="header_inbox_bar" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0);">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="badge bg-important">{{colaborations.length+newEmails}}</span>
+                        </a>
+                        <ul class="dropdown-menu extended inbox">
+                          <li>
+                                <p><a href="#/mail">Mails ({{newEmails}})</a></p>
+                          </li>
+                          <li ng-repeat="colaboration in colaborations">
+                              <p>{{colaboration.subject}} from <a class="activity_link" ng-click="viewProfile(colaboration.from.id)" href="#/people">{{colaboration.from.username}} </a>
+                                <a href="javascript:;" class="activity_link" ng-click="colaborationReply('accept',colaboration.id)" />Accept</a>
+                                <a href="javascript:;" class="activity_link" ng-click="colaborationReply('reject',colaboration.id)" />Reject</a>
+                              </p>
+                          </li>
+                          <li ng-if="colaborations.length == 0">
+                              <p class="red">You have no Mails</p>
+                          </li>
+                        </ul>
+                    </li>
+                    <!-- inbox dropdown end -->
+                    <!-- notification dropdown start-->
+                    <li id="header_notification_bar" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
+            
+                            <i class="fa fa-bell-o"></i>
+                            <span class="badge bg-warning">{{unSeenTasks.length}}</span>
+                        </a>
+                        <ul class="dropdown-menu extended notification">
+                            <li ng-if="unSeenTasks.length > 0">
+                                <p>You have <a href="/#/my_task" class="active">{{unSeenTasks.length}} new </a> tasks</p>
+                            </li>
+                            <li>                                
+                                <p>You do not have any notifications</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- notification dropdown end -->
+                </ul>
+                
+                 <!--  notification end -->
+              </div> 
+              
+            </div> 
+              
+            </header>
+            <!--header end-->
+			
+			<!-- Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="headermodal" class="modal fade" >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title"> Send FeedBack</h4>
+                </div>
+                <form ng-submit="sendFeedback()" role="form-horizontal" >
+                  <div class="modal-body">                  
+                    <div class="form-group">	
+                      <p>Please describe the issue you are experiencing:</p>
+                      <textarea wysihtml5 style="width:100%" form-control" rows="9" required id="feedback_text"></textarea>
+  								  </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-default" type="submit">Send FeedBack </button>
+                    <button type="button"  class="btn btn-success" data-dismiss="modal" id="closesendfeedback" aria-hidden="true">Close</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- modal -->

@@ -1,0 +1,225 @@
+        <section class="wrapper">
+        <!-- page start-->
+        <div class="row">
+            <div class="col-sm-3">
+                <section class="panel">
+                    <div class="panel-body">
+                        <a href="#/mail_compose" ng-click="resetComposeMail()" class="btn btn-compose">
+                            Compose Mail
+                        </a>
+                        <ul class="nav nav-pills nav-stacked mail-nav">
+                            <li><a href="#/mail"> <i class="fa fa-inbox"></i> Inbox  <span class="label label-danger pull-right inbox-notification">{{newEmails}}</span></a></li>
+                            <li><a href="#/sent"> <i class="fa fa-envelope-o"></i> Sent Mail</a></li>
+                            <li><a href="#/important"> <i class="fa fa-certificate"></i> Important</a></li>
+                            <li><a href="#/drafts"> <i class="fa fa-file-text-o"></i> Drafts <span class="label label-info pull-right inbox-notification">{{drafts.length}}</span></a></a></li>
+                            <li class="active"><a href="javascript:void(0);" ng-click="getEmails();"> <i class="fa fa-trash-o"></i> Trash</a></li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="panel">
+                <ul class="nav nav-pills nav-stacked labels-info ">
+                  <li> <h4><a href="#/instantmessaging">Instant Messaging</a></h4> </li>
+                </ul>
+                <!--
+                    <div class="panel-body">
+                        <ul class="nav nav-pills nav-stacked labels-info ">
+                            <li> <h4>Buddy online</h4> </li>
+                            <li> <h4><a href="#/instantmessaging">Instant Messaging</a></h4> </li>                            
+                            <li> <a href="#"> <i class="fa fa-comments-o text-success"></i> Jonathan Smith <p>I do not think</p></a>  </li>
+                            <li> <a href="#"> <i class="fa fa-comments-o text-danger"></i> iRon <p>Busy with coding</p></a> </li>
+                            <li> <a href="#"> <i class="fa fa-comments-o text-muted "></i> Anjelina Joli <p>I out of control</p></a></li>
+                            <li> <a href="#"> <i class="fa fa-comments-o text-muted "></i> Samual Daren <p>I am not here</p></a></li>
+                            <li> <a href="#"> <i class="fa fa-comments-o text-muted "></i> Tis man <p>I do not think</p></a>  </li>
+                            
+                        </ul>
+                        <a href="#"> + Add More</a>
+
+                        <div class="inbox-body text-center inbox-action">
+                            <div class="btn-group">
+                                <a class="btn mini btn-default" href="javascript:;">
+                                    <i class="fa fa-power-off"></i>
+                                </a>
+                            </div>
+                            <div class="btn-group">
+                                <a class="btn mini btn-default" href="javascript:;">
+                                    <i class="fa fa-cog"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                -->
+                </section>
+            </div>
+            <div class="col-sm-9" ng-if="mailview">
+                <section class="panel">
+                    <header class="panel-heading wht-bg">
+                       <h4 class="gen-case"> View Message
+                           <form action="#" class="pull-right mail-src-position">
+                            <div class="input-append">
+                                <input type="text" class="form-control" ng-model="mailSearch" placeholder="Search Mail">
+                            </div>
+                        </form>
+                       </h4>
+                    </header>
+                    <div class="panel-body ">
+
+                        <div class="mail-header row">
+                            <div class="col-md-8">
+                                <h4 class="pull-left">{{viewmail.mail.subject==""?"No-Subject":viewmail.mail.subject}}</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="compose-btn pull-right">
+                                    <a href="mail_compose.html" class="btn btn-sm btn-primary" ><i class="fa fa-reply"></i> Reply</a>
+                                    <button class="btn  btn-sm tooltips" data-original-title="Print" type="button" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-print"></i> </button>
+                                    <a href="javascript:;" ng-click="deleteTrashMail(viewmail)" class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mail-sender">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <img src="images/chat-avatar2.jpg" alt="">
+                                    <strong>{{viewmail.mail.creatername}}</strong>
+                                    <span>[themebucket@gmail.com]</span>
+                                    to
+                                    <strong>me</strong>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="date"> {{viewmail.mail.createdAt}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="view-mail">
+                            {{viewmail.mail.body}}
+                        </div>
+                        <div ng-if="viewmail.mail.hasAttachments" class="attachment-mail">
+                            <p>
+                              <span><i class="fa fa-paperclip"></i> {{mailAttachements.length}} attachments — </span>
+                              <a href="/downloadAttachements/{{viewmail.mail.id}}/all">Download all attachments</a>
+                              |
+                              <a href="javascript:void(0);">View all images</a>
+                            </p>
+                            <ul>
+                                <li ng-repeat="mailAttachement in mailAttachements">
+                                    <a class="atch-thumb" href="javascript:void(0);">
+                                      <img src="{{mailAttachement.filepath}}">
+                                    </a>
+                                    <a class="name" href="javascript:void(0);">
+                                      {{mailAttachement.filename}}
+                                      <span>{{mailAttachement.filesize}} KB</span>
+                                    </a>
+                                    <div class="links">
+                                      <a href="javascript:void(0);">View</a> -
+                                      <a href="/downloadAttachements/{{viewmail.mail.id}}/{{mailAttachement.id}}" target="_blank">Download</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="compose-btn pull-left">
+                          <a href="mail_compose.html" class="btn btn-sm btn-primary" ><i class="fa fa-reply"></i> Reply</a>
+                          <button class="btn btn-sm " ><i class="fa fa-arrow-right"></i> Forward</button>
+                          <button class="btn  btn-sm tooltips" data-original-title="Print" type="button" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-print"></i> </button>
+                          <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-sm-9" ng-if="!mailview">
+                <section class="panel">
+                    <header class="panel-heading wht-bg">
+                      <h4 class="gen-case">Trash ({{trash.length}})
+                      <form action="#" class="pull-right mail-src-position">
+                        <div class="input-append">
+                          <input type="text" class="form-control " placeholder="Search Mail">
+                        </div>
+                      </form>
+                       </h4>
+                    </header>
+                    <div class="panel-body minimal">
+                        <div class="mail-option">
+                            <div class="chk-all">
+                                <div class="pull-left mail-checkbox ">
+                                    <input type="checkbox" ng-model="selectAllTrash.checked" ng-change="selectAllTrashMail()" class="">
+                                </div>
+
+                                <div class="btn-group">
+                                    <a data-toggle="dropdown" href="#" class="btn mini all">
+                                        All
+                                        <i class="fa fa-angle-down "></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#"> None</a></li>
+                                        <li><a href="#"> Read</a></li>
+                                        <li><a href="#"> Unread</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="btn-group">
+                                <a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" href="#" class="btn mini tooltips">
+                                    <i class=" fa fa-refresh"></i>
+                                </a>
+                            </div>
+                           
+
+                            <div class="btn-group">
+                                <a data-toggle="dropdown" href="javascript:void(0);" class="btn mini blue">
+                                    More
+                                    <i class="fa fa-angle-down "></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <!-- <li><a href="javascript:void(0);" ng-click="markAsReadEmail(4)"><i class="fa fa-pencil"></i> Mark as Read</a></li>
+                                    <li><a href="javascript:void(0);" ng-click="markAsUnreadEmail(4)"><i class="fa fa-pencil"></i> Mark as Unread</a></li>
+                                     <li class="divider"></li>
+                                    <li><a href="javascript:void(0);"><i class="fa fa-trash-o"></i> Delete</a></li> -->
+                                </ul>
+                            </div>
+                            <div class="btn-group hidden-phone">
+                                <a data-toggle="dropdown" href="javascript:void(0);" class="btn mini blue">
+                                    Move to
+                                    <i class="fa fa-angle-down "></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:void(0);" ng-click="restoreSelectedTrashMail()"><i class="fa fa-database"></i> Restore</a></li>
+                                    <li><a href="javascript:void(0);" ng-click="deleteSelectedTrashMail()"><i class="fa fa-trash-o"></i> Delete forever</a></li>
+                                </ul>
+                            </div>
+
+                            
+                            <ul class="unstyled inbox-pagination">
+                                <li><span>{{getVisibleMails("trash")}}</span></li>
+                                <li>
+                                    <button ng-disabled="currentTrashPage == 0" ng-click="currentTrashPage=currentTrashPage-1" class="np-btn" href="javascript:void(0);"><i class="fa fa-angle-left  pagination-left"></i></button>
+                                </li>
+                                <li>
+                                    <button ng-disabled="currentTrashPage >= trash.length/mailPageSize - 1" ng-click="currentTrashPage=currentTrashPage+1" class="np-btn" href="javascript:void(0);"><i class="fa fa-angle-right pagination-right"></i></button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="table-inbox-wrap">
+                        <table class="table table-inbox table-hover">
+                          <tbody>
+                            <tr ng-repeat="mail in trash | filter:mailSearch| startFrom:mailPageSize*currentTrashPage | limitTo:mailPageSize | orderBy:'mail.id': true" class="{{mail.details.isUnread}}" >
+                              <td class="inbox-small-cells">
+                                  <input type="checkbox" ng-model="selectedTrashEmail[$index]" class="mail-checkbox">
+                              </td>
+                              <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
+                              <td class="view-message dont-show"><a href="javascript:void(0);" ng-click="viewTrashMail($index);" >{{mail.mail.creatername}} <span class="label label-danger pull-right">{{mail.mail.trashType}}</span></a></td>
+                              <td class="view-message"><a href="javascript:;" ng-click="viewTrashMail($index);" >{{mail.mail.subject==""?"No-Subject":mail.mail.subject}}</a></td>
+                              <td class="view-message inbox-small-cells" ng-click="viewTrashMail($index);" >
+                                  <i class="fa fa-paperclip" ng-if="mail.mail.hasAttachments"></i>
+                              </td>
+                              <td class="view-message text-right" ng-click="viewTrashMail($index);" >{{convertTime(mail.mail.updatedAt)}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- page end-->
+        </section>

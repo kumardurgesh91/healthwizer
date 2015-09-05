@@ -1,0 +1,1166 @@
+    <section class="wrapper">
+        <!-- page start-->
+
+        <div class="row">
+        
+        	
+            <div class="col-sm-12">
+            	<div class="row">
+          		   <div class="right_cont" style="min-height:500px;" data-ng-init = "findprojectbyID()">
+                
+                	
+                    
+                    <div class="library_cont clearfix">
+                    	<div class="library_cont_box pull-left">
+                         <a data-toggle="modal" href="#myModal" class="das_btns pull-left"><span class="dasbtn_label">{{projectAtt.projectname}}</span>
+                                     <span class="das_btn_icons">
+                                     
+                                    <img src="images/pluse_icon.png" alt=""></span></a>
+                        	
+	                    	
+        				</div> 
+                        
+                        <div class="pull-right">
+                        	<div class="toggle-right-box">
+                <div class="fa fa-bars"></div>
+            </div>
+                        
+                        </div>           
+                    </div>
+                    <div class="ibrary_header">
+	                   <div class="col-md-6, col-sm-6 col-xs-12">
+	                        <h1>{{projectAtt.projectname}}
+							
+							<span class="lastupdated_tag" >Created at {{lastupdate}}</span>
+							
+							
+							
+							</h1>
+                        </div>
+                        
+                       <div class="col-md-6, col-sm-6 col-xs-12">
+                       		
+							<div class="topsocial_medies pull-right">
+	                       		
+                    	
+									<a class="topfacebook_icon" href="javascript:;">Facebook</a>
+									<a class="toptwitter_icon" href="javascript:;">twitter</a>
+									<a class="topgplus_icon" href="javascript:;">Google Plus</a>
+									<a class="topemail_icon" href="javascript:;">mail</a>
+									
+									<span class="imbed_tag"><a  href="javascript:;"> &#60; &#47; &#62;EMBED</a></span>
+									
+								
+								
+                            </div>
+                       
+                       </div>
+					    <button type="button" class="dashborad-nav">Dashboard <b class="caret"></b></button>
+                       
+                       <div class="clr"></div>
+                    </div> 
+                       <div class="dashboard-wrap">
+                <div class="dashboard-content clearfix"><span>Dashboard</span></div>
+              </div>  
+                    
+                    <div class="das_alllist_cont">
+                    
+                    
+                    	 
+                         	<div class="das_alllist_header1">
+                               <div class="col-md-12, col-sm-12 col-xs-12">
+									
+                                    <div class="pro_fetabs">
+										   	
+										    <ul class="nav nav-tabs nav-justified ">
+												<li >
+													<a data-toggle="tab" href="#a">
+														Overview
+													</a>
+												</li>
+												<li>
+													<a data-toggle="tab" href="#b">
+														Activity
+													</a>
+												</li>
+												<li class="active">
+													<a data-toggle="tab" href="#c" class="contact-map">
+														Lab Book
+													</a>
+												</li>
+												
+												<li>
+													<a data-toggle="tab" href="#d" class="contact-map">
+														Library
+													</a>
+												</li>
+												
+												<li>
+													<a data-toggle="tab" href="#e" class="contact-map">
+														Task Manager
+													</a>
+												</li>
+												
+												<li>
+													<a data-toggle="tab" href="#f" class="contact-map">
+														More
+													</a>
+												</li>
+                           
+											</ul>
+											
+											<div class="daspro_profea_icons pull-right">
+												<a class="das_btns sp_dasicons add_hearticon" href="javascript:;">Favourites</a>
+												<a class="das_btns sp_dasicons add_commenticon" href="javascript:;">Message</a>
+												<a class="das_btns sp_dasicons add_newnoteicon" href="javascript:;">Message</a>
+												<a class="das_btns sp_dasicons add_usericon" href="javascript:;">Add User</a>
+												<a class="das_btns sp_dasicons add_alerticon" href="/project_management">Alert</a>
+												
+											</div>
+											
+											<div class="clr"></div>
+											
+                                    
+                                    </div>
+									
+									
+									
+									
+									
+									
+                                    
+                                </div>
+                                
+                               
+                               
+                               <div class="clr"></div>
+                         
+                    </div> 
+                    
+                    		<div class="library_list_cont">
+                            
+                            	
+										
+										
+                 				<div class="panel-body" data-ng-init ="findprojectsfiles(34)">
+									<div class="tab-content tasi-tab" >
+											<div class="tab-pane " id="a" >
+												<h3>Project Description</h3>
+												<p ng-bind-html-unsafe="projectAtt.projectdesc"> </p>
+												<div class="files-wrap" ng-repeat="file in files">
+                                                  <span class="files-heading">Files:</span>
+                                  <span class="files-thumb"><img src="{{file.filepath }}"> <a href="{{file.filepath}}">{{file.filename }}</a></span>
+
+
+                                               </div>
+											</div>
+											<div class="tab-pane" id="b">
+												<div class="new_feedlist">
+										
+											<section id="flip-scroll">
+													<table class="table table-striped new_feedtable" data-ng-init = "findactivity()" >								
+														<tbody>
+															<tr ng-repeat="activity in activities">
+																<td width="25" class="feed_pic" valign="middle"></td>
+																
+																<td>
+																	<span class="feed_user">{{activity.creater}}</span> 
+																	<span class="news_feed_post" ><p ng-bind-html-unsafe="activity.activity"> </p></span>
+																	
+																	<span class="news_feed_date"><a id="{{activity.id}}" href="javascript:;" onclick="opencommentbox({{activity.id}})">Comments</a> * {{convertTime(activity.createdAt)}}</span>
+																	<div class="all_comments" data-ng-init ="findcomments(activity.id)" >
+																	<div ng-repeat="comm in commArr[activity.id]" >
+																	<div class="detail-img-name recent-thumb bordbott clearfix">
+                                   <img src=<%= user.profilepic %> > 
+									   <span class="feed_user">
+										   <a href="/profile">{{comm.creater}} </a>
+									   <p class="comdetails">{{comm.comments}}</p>
+									   </span>									
+                                   <div class="date-time"> <a href="#">flag</a> posted on  {{convertTime(comm.createdAt)}} </div>
+                                </div>
+								</div>
+								</div>
+												 <div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+                                   <img src=<%= user.profilepic %> > <textarea id="a{{activity.id}}" placeholder="Comments..."></textarea>
+								   <button class="btn btn-primary" type="submit" ng-click="createcommnets(activity.id)">Post</button>
+                                </div>					
+																</td>
+																
+															</tr>
+															
+															
+															
+															
+														</tbody>
+													</table>
+                        </section>
+										
+										</div>
+											</div>
+											<div class="tab-pane active" id="c">
+												<!-- Create New Entry -->
+												<div class="create-new-entry clearfix">
+												<h4>Create New Entry:</h4>
+												<a href="#myNote" data-toggle="modal"><i class="icon-plusround"></i> Note</a>
+												<a href="#myLitrature" data-toggle="modal"><i class="icon-plusround"></i> Literature</a>
+												<a href="#myprotocol" data-toggle="modal"><i class="icon-plusround"></i> Protocol</a>
+												<a href="#myexperiment" data-toggle="modal"><i class="icon-plusround"></i> Experiment</a>
+												</div>
+												<!-- Create New Entry End -->
+												<div class="search_library full-wdt">                                    	
+                                    	       <input type="text" ng-model="searchnote" placeholder="Search Library">
+                                 	           <input type="image" class="lib_searchicon" src="images/search_icon1.png">
+                                              </div>
+								
+											  <div class="all-select-wrap clearfix">
+											    <div class="drop_down labselectbox">
+                                                <select id="draff" ng-model="orderList">                                            
+                                                    <option value="createdAt">Draft entries first</option>
+													<option value="-updatedAt">Newest first </option>  
+                                                    <option value="updatedAt">Oldest first </option>													
+                                                </select>
+                                             </div>
+											 
+											 <div class="drop_down labselectbox">
+                                                <select id="typeo" >
+                                                    <option>Display all</option>
+                                                    <option>Notes</option>
+                                                    <option>Experimental</option>
+                                                    <option>Literature</option>
+                                                    <option>Protocol</option>													
+                                                </select>
+                                             </div>
+											 
+											  <div class="drop_down labselectbox">
+                                                <select id="authorn">
+                                                    <option>Author</option>
+                                                    <option>{{projectAtt.username}}</option>
+                                                </select>
+                                             </div>
+											 <div class="drop_down labselectbox">
+                                                <select id="tags">
+                                                    <option>Tags</option>                                                  
+                                                </select>
+                                             </div>
+											  <div class="drop_down labselectbox">
+                                                <select id="datas">
+                                                <option>Data</option>  
+                                                <option>Display all</option>  
+                                                <option>Unclassified</option>  
+                                                <option>Raw data</option>  
+                                                <option>Processed data</option>  
+                                                <option>Final data</option>  													
+                                                </select>
+                                             </div>
+											 
+											 <div class="editss-wrap">
+											 <a href="#" class="disstrr-item"><span>Display only starred items</span></a>
+											 <a href="#" class="disdraff-item"><span>Display only draft items</span></a>
+											 <a href="#" class="disarchi-item"><span>Display only archived items</span></a>
+											 <a href="#" class="disreset-item"><span>Reset</span></a>						 
+											</div>
+										
+										<!-- start note div -->
+											<div class="all_note  Notes" id="note_div" data-ng-init = "findnote()">	
+											
+											
+											<div class="new-note-wrap" ng-repeat="note in notes | filter:searchnote| orderBy: orderList">
+											<div class="note-head clearfix">
+													<span class="stars"></span>
+													<span class="head-text">{{note.notename}}</span>
+													<span class="file-format" ng-repeat="tag in tags[note.id]">{{tag}}</span>
+													<div class="pull-right link-count-wrap">
+														<a href="#" class="file-link"></a>
+														<a href="#" class="file-count">1</a>
+													</div>
+											</div>
+											
+											<div class="row entry-wrap clearfix">
+												
+												<div class="col-md-10 col-sm-12 col-xs-12 padd-left">
+													<div class="row">
+													
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<span class="date-det"><strong>ENTRY TYPE:</strong> Note </span>
+																<span class="date-det"><strong>LAST UPDATED:</strong> {{lastnoteupdateArr[note.id]}}</span>
+																<span class="date-det"><strong>DATA TYPE:</strong> {{note.notetype}}</span>
+													</div>
+													
+													
+													<div class="col-md-3 col-sm-3 col-xs-12">
+														<a href="#" class="detail-img-name clearfix">
+														<img src=<%= user.profilepic %> />
+														<span>{{note.creater}} </span>											 
+														</a>
+														
+													</div>
+												</div>
+												
+												
+											</div>
+											
+											
+											
+											<div class="col-md-2 col-sm-12 col-xs-12">
+												<a href="#myNote" onclick="getEditEntry({{note.id}})"  data-toggle="modal" id= {{note.id}}  class="edit-entry">EDIT ENTRY</a>
+												<a href="#" class="see-history">SEE HISTORY</a>
+											</div>
+											
+											
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">{{note.description}}</div>
+											
+											
+										</div>
+										
+								</div>	
+											
+
+							</div>
+											<!-- end note div -->
+											
+											<!-- start litrature div -->
+											<div class="all_note  Literature" id="litrature_div" data-ng-init = "findlitrature()">	
+											
+											
+											<div class="new-note-wrap" ng-repeat="litrature in litratures | filter:searchnote| orderBy: orderList">
+											<div class="note-head clearfix">
+													<span class="stars"></span>
+													<span class="head-text">{{litrature.litraturename}}</span>
+													<span class="file-format" ng-repeat="tag in lit_tag[litrature.id]">{{tag}}</span>
+													<div class="pull-right link-count-wrap">
+														<a href="#" class="file-link"></a>
+														<a href="#" class="file-count">1</a>
+													</div>
+											</div>
+											
+											<div class="row entry-wrap clearfix">
+												
+												<div class="col-md-10 col-sm-12 col-xs-12 padd-left">
+													<div class="row">
+													
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<span class="date-det"><strong>ENTRY TYPE:</strong> Litrature </span>
+																<span class="date-det"><strong>LAST UPDATED:</strong> {{lastlitupdateArr[litrature.id]}}</span>
+																
+													</div>
+													
+													
+													<div class="col-md-3 col-sm-3 col-xs-12">
+														<a href="#" class="detail-img-name clearfix">
+														<img src=<%= user.profilepic %> />
+														<span>{{litrature.creater}} </span>											 
+														</a>
+														
+													</div>
+												</div>
+												
+												
+											</div>
+											
+											
+											
+											<div class="col-md-2 col-sm-12 col-xs-12">
+												<a href="#myLitrature"   onclick="getEditEntry({{litrature.id}})" data-toggle="modal" class="edit-entry">EDIT ENTRY</a>
+												<a href="#" class="see-history">SEE HISTORY</a>
+											</div>
+											
+											
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"><h4>Abstract</h4>{{litrature.abstarct}}</div>
+											
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"><h4>Highlight</h4>{{litrature.highlight}}</div>
+											
+											
+										</div>
+										
+								</div>	
+											
+
+							</div>
+					
+											<!-- end litrature div -->
+											
+											
+											<!-- start Protocol div -->
+											<div class="all_note  Protocol" id="protocol_div" data-ng-init = "findprotocol()">	
+											
+											
+											<div class="new-note-wrap" ng-repeat="protocol in protocols | filter:searchnote| orderBy: orderList">
+											<div class="note-head clearfix">
+													<span class="stars"></span>
+													<span class="head-text">{{protocol.protocolname}}</span>
+													<span class="file-format" ng-repeat="tag in pro_tag[protocol.id]">{{tag}}</span>
+													<div class="pull-right link-count-wrap">
+														<a href="#" class="file-link"></a>
+														<a href="#" class="file-count">1</a>
+													</div>
+											</div>
+											
+											<div class="row entry-wrap clearfix">
+												
+												<div class="col-md-10 col-sm-12 col-xs-12 padd-left">
+													<div class="row">
+													
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<span class="date-det"><strong>ENTRY TYPE:</strong> Protocol </span>
+																<span class="date-det"><strong>LAST UPDATED:</strong> {{lastproupdateArr[protocol.id]}}</span>
+																
+													</div>
+													
+													
+													<div class="col-md-3 col-sm-3 col-xs-12">
+														<a href="#" class="detail-img-name clearfix">
+														<img src=<%= user.profilepic %> />
+														<span>{{protocol.creater}} </span>											 
+														</a>
+														
+													</div>
+												</div>
+												
+												
+											</div>
+											
+											
+											
+											<div class="col-md-2 col-sm-12 col-xs-12">
+												<a href="#myprotocol"  onclick="getEditEntry({{protocol.id}})" data-toggle="modal" class="edit-entry">EDIT ENTRY</a>
+												<a href="#" class="see-history">SEE HISTORY</a>
+											</div>
+											
+											
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+											<h4>Matereial</h4>
+											{{protocol.materials}}</div>
+											
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+												<h4>Procedure</h4>
+											
+											{{protocol.procedure}}</div>
+											
+											
+										</div>
+										
+								</div>	
+											
+
+							</div>
+							
+											<!-- end protocol div -->
+											
+										<!-- start experiment div -->
+											<div class="all_note  Experimental" id="experiment_div" data-ng-init = "findexperiments()">	
+											
+											
+											<div class="new-note-wrap" ng-repeat="experiment in experiments | filter:searchnote| orderBy: orderList">
+											<div class="note-head clearfix">
+													<span class="stars"></span>
+													<span class="head-text">{{experiment.experimentname}}</span>
+													<span class="file-format" ng-repeat="tag in exp_tag[experiment.id]">{{tag}}</span>
+													<div class="pull-right link-count-wrap">
+														<a href="#" class="file-link"></a>
+														<a href="#" class="file-count">1</a>
+													</div>
+											</div>
+											
+											<div class="row entry-wrap clearfix">
+												
+												<div class="col-md-10 col-sm-12 col-xs-12 padd-left">
+													<div class="row">
+													
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<span class="date-det"><strong>ENTRY TYPE:</strong> Experiment </span>
+																<span class="date-det"><strong>LAST UPDATED:</strong> {{lastexpupdateArr[experiment.id]}}</span>
+																
+													</div>
+													
+													
+													<div class="col-md-3 col-sm-3 col-xs-12">
+														<a href="#" class="detail-img-name clearfix">
+														<img src=<%= user.profilepic %> />
+														<span>{{experiment.creater}} </span>											 
+														</a>
+														
+													</div>
+												</div>
+												
+												
+											</div>
+											
+											
+											
+											<div class="col-md-2 col-sm-12 col-xs-12">
+												<a href="#myexperiment"  onclick="getEditEntry({{experiment.id}})" data-toggle="modal" class="edit-entry">EDIT ENTRY</a>
+												<a href="#" class="see-history">SEE HISTORY</a>
+											</div>
+											
+											
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"><h4>Background</h4>{{experiment.background}}</div>
+											
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"><h4>Result</h4>{{experiment.result}}</div>
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"><h4>Conclusion</h4>{{experiment.conclusion}}</div>
+											
+											
+										</div>
+										
+								</div>	
+											
+
+							</div>
+					
+											<!-- end experiment div -->
+											
+										
+
+											</div>
+											 
+											 
+										
+												
+											</div>
+											<div class="tab-pane" id="d">
+												4
+											</div>
+											
+											<div class="tab-pane" id="e">
+												5
+											</div>
+											
+											<div class="tab-pane" id="f">
+												6
+											</div>
+										
+									</div>
+
+								</div>
+									                   
+                                     
+                            
+                            </div>
+                    	
+                    
+                    </div>
+                
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- page end-->
+        </section>
+    </section>
+    <!--main content end-->
+<!--right sidebar start-->
+<div class="right-sidebar">
+<div class="search-row">
+    <input type="text" placeholder="Search" class="form-control">
+</div>
+<div class="right-stat-bar">
+<ul class="right-side-accordion">
+<li class="widget-collapsible">
+    <a href="#" class="head widget-head red-bg active clearfix">
+        <span class="pull-left">Task Tracker</span>
+        <span class="pull-right widget-collapse"><i class="ico-minus"></i></span>
+    </a>
+   
+</div>
+</div>
+<!--right sidebar end-->
+
+</section>
+
+
+<%- partial('partials/footer')%>
+
+
+		  
+		  
+		  <!--Note  Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myNote" class="modal fade" >
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Create New Note</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                          
+                          <form role="form-horizontal" id="projectform" >
+                                <div class="form-group"><span class="note_type active_ntype">RAW DATA</span> <span class="note_type">PROCESSED DATA</span> <span class="note_type">FINAL DATA</span> </div>
+								 <div class="form-group">	
+                                     <p>Enter New Note here</p>
+                                      <input type="text" id="my_note"  name="my_note" id="my_note" placeholder="New Note"  class="form-control placeholder-no-fix">
+								</div>
+								
+															
+								<div class="form-group">
+									<p>Tags</p>
+								<div class="all_tags">
+									
+<div class="create_me"><div class="tag_cont"></div><input type="" id="get_data_note" placeholder="Enter Your tag line" /></div>
+
+<div class="clr"></div>
+
+</div>
+</div>
+                                
+                               
+
+                                <div class="compose-editor">
+                                	<p>Discription</p>
+                                    <textarea class="wysihtml5 form-control" rows="9" id="note_desc"></textarea>
+                                   
+                                </div>
+								
+								<div id="upload" class="project_upload">
+                      
+									<div id="drop" class="project_drop" >
+										<span>Drop Here</span><strong>&nbsp;</strong>
+
+										<a>Browse</a>
+										<input type="file" name="projectfile_note" id="projectfile_note" multiple />
+									</div>
+
+									<ul>
+										<!-- The file uploads will be shown here -->
+									</ul>
+
+								</div>
+								
+								 
+                                
+
+                            </form>
+                          
+                          
+
+                      </div>
+                      <div class="modal-footer">
+                          <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="createnote()">Save </button>
+                          <button type="button"  class="btn btn-success" data-dismiss="modal" onclick="removeEntry()" aria-hidden="true">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- modal -->
+		  
+		   <!--Litrature Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myLitrature" class="modal fade" >
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Create New Literature</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                          
+                          <form role="form-horizontal" id="projectform" >
+                                
+								 <div class="form-group">	
+                                     <p>Enter New Literature here</p>
+                                      <input type="text" id="my_litrature"  name="my_litrature" id placeholder="New Litrature"  class="form-control placeholder-no-fix">
+								</div>
+								
+								
+								<div class="form-group">
+									<p>Tags</p>
+								<div class="all_tags">
+									
+<div class="create_me"><div class="tag_cont"></div><input type="" id="get_data_lit" placeholder="Enter Your tag line" /></div>
+
+<div class="clr"></div>
+
+</div>
+</div>
+                                
+                               
+
+                                <div class="compose-editor">
+                                	<p>Abstarct</p>
+                                    <textarea class="wysihtml5 form-control" rows="9" id="litrature_abs"></textarea>
+                                   
+                                </div>
+								
+								 <div class="compose-editor">
+                                	<p>Highlight</p>
+                                    <textarea class="wysihtml5 form-control" rows="9" id="litrature_high"></textarea>
+                                   
+                                </div>
+								
+								<div id="upload" class="project_upload">
+                      
+									<div id="drop" class="project_drop" >
+										<span>Drop Here</span><strong>&nbsp;</strong>
+
+										<a>Browse</a>
+										<input type="file" name="projectfile" id="projectfile" multiple />
+									</div>
+
+									<ul>
+										<!-- The file uploads will be shown here -->
+									</ul>
+
+								</div>
+								
+								 
+                                
+
+                            </form>
+                          
+                          
+
+                      </div>
+                      <div class="modal-footer">
+                          <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="createlitrature()">Save </button>
+                          <button type="button"  class="btn btn-success" data-dismiss="modal" onclick="removeEntry()" aria-hidden="true">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- modal -->
+		  
+		  
+		 <!--Protocol Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myprotocol" class="modal fade" >
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Create New Protocol</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                          
+                          <form role="form-horizontal" id="projectform" >
+                                
+								 <div class="form-group">	
+                                     <p>Enter New Protocol here</p>
+                                      <input type="text" id="my_protocol"  name="my_protocol" id placeholder="New Litrature"  class="form-control placeholder-no-fix">
+								</div>
+								
+								
+								<div class="form-group">
+									<p>Tags</p>
+								<div class="all_tags">
+									
+<div class="create_me"><div class="tag_cont"></div><input type="" id="get_data_pro" placeholder="Enter Your tag line" /></div>
+
+<div class="clr"></div>
+
+</div>
+</div>
+                                
+                               
+
+                                <div class="compose-editor">
+                                	<p>MATERIALS</p>
+                                    <textarea class="wysihtml5 form-control" rows="9" id="protocol_mat"></textarea>
+                                   
+                                </div>
+								
+								 <div class="compose-editor">
+                                	<p>PROCEDURE</p>
+                                    <textarea class="wysihtml5 form-control" rows="9" id="protocol_pro"></textarea>
+                                   
+                                </div>
+								
+								<div id="upload" class="project_upload">
+                      
+									<div id="drop" class="project_drop" >
+										<span>Drop Here</span><strong>&nbsp;</strong>
+
+										<a>Browse</a>
+										<input type="file" name="projectfile" id="projectfile" multiple />
+									</div>
+
+									<ul>
+										<!-- The file uploads will be shown here -->
+									</ul>
+
+								</div>
+								
+								 
+                                
+
+                            </form>
+                          
+                          
+
+                      </div>
+                      <div class="modal-footer">
+                          <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="createprotocol()">Save </button>
+                          <button type="button"  class="btn btn-success" data-dismiss="modal" onclick="removeEntry()" aria-hidden="true">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- modal -->
+		  
+		  <!-- experimental Modall -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myexperiment" class="modal fade" >
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Create New Experiment</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                          
+                          <form role="form-horizontal" id="projectform" >
+                                
+								 <div class="form-group">	
+                                     <p>Enter New Experiment here</p>
+                                      <input type="text" id="my_experiment"  name="my_experiment" id placeholder="New Litrature"  class="form-control placeholder-no-fix">
+								</div>
+								
+								
+								<div class="form-group">
+									<p>Tags</p>
+								<div class="all_tags">
+									
+<div class="create_me"><div class="tag_cont"></div><input type="" id="get_data_exp" placeholder="Enter Your tag line" /></div>
+
+<div class="clr"></div>
+
+</div>
+</div>
+                                
+                               
+
+                                <div class="compose-editor">
+                                	<p>BACKGROUND</p>
+                                    <textarea class="wysihtml5 form-control" rows="9" id="experimet_bg"></textarea>
+                                   
+                                </div>
+								
+								 <div class="compose-editor">
+                                	<p>RESULTS</p>
+                                    <textarea class="wysihtml5 form-control" rows="9" id="experimet_res"></textarea>
+                                   
+                                </div>
+								
+								<div class="compose-editor">
+                                	<p>CONCLUSIONS</p>
+                                    <textarea class="wysihtml5 form-control" rows="9" id="experimet_con"></textarea>
+                                   
+                                </div>
+								
+								<div id="upload" class="project_upload">
+                      
+									<div id="drop" class="project_drop" >
+										<span>Drop Here</span><strong>&nbsp;</strong>
+
+										<a>Browse</a>
+										<input type="file" name="projectfile" id="projectfile" multiple />
+									</div>
+
+									<ul>
+										<!-- The file uploads will be shown here -->
+									</ul>
+
+								</div>
+								
+								 
+                                
+
+                            </form>
+                          
+                          
+
+                      </div>
+                      <div class="modal-footer">
+                          <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="createexperiment()">Save </button>
+                          <button type="button"  class="btn btn-success" data-dismiss="modal" onclick="removeEntry()" aria-hidden="true">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- modal -->
+
+<script>
+
+function opencommentbox(id)
+{
+	$("#"+id).parents().children('.comments-box').slideToggle();	
+}
+
+//wysihtml5 start
+
+	var projectid = localStorage.getItem("projectid");
+		console.log(projectid,"anishwa");
+		var note_tag = '';
+		var get_allval = "";
+		var lit_tag='';
+		var pro_tag='';
+		var exp_tag='';
+		var edit_entry='';
+		
+	var filepath = '';
+	var filename = '';
+	var username= "<%= user.username %>";
+	
+	function getEditEntry( id)
+	{
+		
+		
+		edit_entry= id;//$('.edit-entry').attr('id');
+		console.log("edit -entry",edit_entry);
+		//alert("hi"+edit_entry);
+	}
+	
+	function removeEntry()
+	{
+		edit_entry='';
+		//alert('hi');
+	}
+
+    $('.wysihtml5').wysihtml5();
+
+    //wysihtml5 end
+$(document).ready(function(e) {	
+
+
+
+$(".dashborad-nav").click(function(){
+$(this).toggleClass("active");
+$(".dashboard-wrap").slideToggle();
+});	
+
+
+$('.put-comment').click(function(){
+	$(this).parents().children('.comments-box').slideToggle();	
+});
+		
+	$("#typeo_msdd .ddlabel").change(function(){	 
+	
+	
+  
+	//var showdata = $(this).text(); 
+	
+	//$(".nvisible").hide();
+	
+	//$("." + showdata).show();
+	
+	});
+
+
+//convert
+	$("#mycomp").msDropdown({roundedBorder:false});
+	$("#draff").msDropdown({roundedBorder:false});
+	//$("#typeo").msDropdown({roundedBorder:false});
+	
+	var typeodd = $("#typeo").msDropdown().data("dd");
+	typeodd.on("change", function() {
+				var acttypeof = $('#typeo_child .selected').text();
+				
+				if(acttypeof != 'Display all')
+					{
+				
+						$('.all_note').hide();
+						$('.' + acttypeof ).show();
+						
+					}
+					
+					else{
+					
+					$('.all_note').show();
+					}
+	
+	
+	});
+	$("#authorn").msDropdown({roundedBorder:false});
+	$("#tags").msDropdown({roundedBorder:false});
+	$("#datas").msDropdown({roundedBorder:false});
+	$("#shortedby").msDropdown({roundedBorder:false});
+	$("#project_mode").msDropdown({roundedBorder:false})
+	
+	var oDropdown = $("#authorn").msDropdown().data("dd");
+	//console.log(projectAtt,"========");
+	/*if(projectAtt!=undefined)
+	{
+		var att= {{projectAtt.username}};
+		alert(att);
+		oDropdown.add(new Option(att,att ));
+	}*/
+		
+	$('#project_mode').change(function(){
+	
+	var project_mode_val = $('#project_mode option:selected').text();
+	
+		if(project_mode_val == 'Open')
+			{
+				
+				$('.open_drop').show();
+				
+			
+			}
+			else{
+			
+				$('.open_drop').hide();
+			
+			}
+	
+	});
+	
+	
+	$('.das_btns').click(function(){
+		
+		
+		//$("#project_mode").refresh();
+		
+		//$("#project_mode").refresh();
+		
+		var oDropdown = $("#project_mode").msDropdown().data("dd");
+		//oDropdown.set("selectedIndex", 0);
+		oDropdown.refresh();
+		
+	
+		});
+		/** tag line function  start*/
+		
+		$('#get_data_note').keydown(function(event){    
+	
+			   if(event.keyCode==13)
+				
+				{
+					if($('#get_data_note').val()!="")
+					
+					{
+					$('.tag_cont').append("<div class='single_tag'>" + $('#get_data_note').val() + "<div class='close_tag'>X</div> </div>");
+					note_tag += $('#get_data_note').val() + ',';
+					console.log(note_tag);				
+					$('#get_data_note').val('');
+					}
+					
+				}
+				
+				
+				
+$('.close_tag').click(function(){
+	
+	//console.log($('.close_tag').val(),"removed===");
+	$(this).parent().remove();
+	
+	});
+	
+	
+					
+	
+});
+$('#get_data_lit').keydown(function(event){    
+	
+			   if(event.keyCode==13)
+				
+				{
+					if($('#get_data_lit').val()!="")
+					
+					{
+					$('.tag_cont').append("<div class='single_tag'>" + $('#get_data_lit').val() + "<div class='close_tag'>X</div> </div>");
+					lit_tag += $('#get_data_lit').val() + ',';
+					console.log(note_tag);				
+					$('#get_data_lit').val('');
+					}
+					
+				}
+				
+				
+				
+$('.close_tag').click(function(){
+	
+	//console.log($('.close_tag').val(),"removed===");
+	$(this).parent().remove();
+	
+	});
+	
+	
+					
+	
+});
+$('#get_data_pro').keydown(function(event){    
+	
+			   if(event.keyCode==13)
+				
+				{
+					if($('#get_data_pro').val()!="")
+					
+					{
+					$('.tag_cont').append("<div class='single_tag'>" + $('#get_data_pro').val() + "<div class='close_tag'>X</div> </div>");
+					pro_tag += $('#get_data_pro').val() + ',';
+					$('#get_data_pro').val('');
+					}
+					
+				}
+				
+				
+				
+$('.close_tag').click(function(){
+	
+	//console.log($('.close_tag').val(),"removed===");
+	$(this).parent().remove();
+	
+	});
+	
+	
+					
+	
+});
+
+$('#get_data_exp').keydown(function(event){    
+	
+			   if(event.keyCode==13)
+				
+				{
+					if($('#get_data_exp').val()!="")
+					
+					{
+					$('.tag_cont').append("<div class='single_tag'>" + $('#get_data_exp').val() + "<div class='close_tag'>X</div> </div>");
+					exp_tag += $('#get_data_exp').val() + ',';
+					$('#get_data_exp').val('');
+					}
+					
+				}
+				
+				
+				
+$('.close_tag').click(function(){
+	
+	//console.log($('.close_tag').val(),"removed===");
+	$(this).parent().remove();
+	
+	});
+	
+	
+					
+	
+});
+
+
+
+/** tag line function  end*/
+
+
+
+
+// Get the type for notes start
+
+
+	$('.note_type').on('click',function(){
+	
+	
+	
+		$('.note_type').removeClass('active_ntype');
+			$(this).addClass('active_ntype');
+	
+	});
+	
+
+});
+</script>

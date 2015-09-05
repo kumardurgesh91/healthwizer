@@ -1,0 +1,530 @@
+      <section class="wrapper"  ng-controller="libController">
+        <!-- page start-->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                   <div class="right_cont" style="min-height:500px;">
+                    <div class="library_cont clearfix">
+                        <div class="library_cont_box pull-left">
+                         <a href="javascript:;" class="das_btns pull-left"><span class="dasbtn_label">Library</span>
+                                     <span class="das_btn_icons">
+                                    <img src="images/pluse_icon.png" alt=""></span></a>
+                        </div> 
+                        <!--
+                        <div class="pull-right">
+                            <div class="toggle-right-box">
+                              <div class="fa fa-bars"></div>
+                            </div>
+                        </div>           
+                        -->
+                    </div>
+                    <div class="ibrary_header">
+                       <div class="col-md-6, col-sm-6 col-xs-12">
+                            <h1>My Library</h1>
+                        </div>
+                        
+                       <div class="col-md-6, col-sm-6 col-xs-12">
+                            <div class="das_sp_icons pull-right">
+                                <a href="javascript:;" class="das_btns sp_dasicons add_usericon">Add User</a>
+                                <a href="#/project_management" class="das_btns sp_dasicons add_alerticon">Alert</a>
+                                <a href="javascript:;" class="das_btns sp_dasicons add_menuicon" ng-click="gridView=false">Menu</a>
+                                <a href="javascript:;" class="das_btns sp_dasicons add_moreicon" ng-click="gridView=true">More</a>
+                            </div>
+                       
+                       </div>
+                       
+                       <div class="clr"></div>
+                    </div>  
+                    <div class="das_alllist_cont">
+                            <div class="das_alllist_header">
+                               <div class="col-md-12, col-sm-12 col-xs-12">
+                                    
+                                    <div class="das_btns clearfix pull-left">
+                                            <div class="dasbtn_label"><span>Create</span>
+                                            
+                                                 <div class="doc_mode">
+                                                <ul>
+                                                    <li><a href="#myfolder" data-toggle="modal">Folder</a></li>
+                                                    <li><a href="#mycitation" data-toggle="modal">Citation List</a></li>
+                                                    <li><a href="#mydatasheet" data-toggle="modal">Data sheet</a></li>
+                                                    <li><a href="#mydocuments" data-toggle="modal">Document</a></li>
+                                                
+                                                </ul>
+                                            
+                                            </div>
+                                             </div> 
+                                
+                                             <div class="das_btn_icons">
+                                 <img src="images/arrow_up.png" alt="">
+                                 <input type="file" class="ak_upload">
+                             </div>
+                                     </div>
+                                    
+                                    <div class="search_library">
+                                        
+                                        <input type="text" ng-model="searchLibrary" placeholder="Search Library">
+                                        <input  type="image" src="images/search_icon1.png" class="lib_searchicon">
+                                    </div>
+                                    
+                                    <div class="show_all_labopt">
+                                    
+                                        <label>Show:</label>
+                                                
+                                        <div class="drop_down labselectbox">
+                                                <select msDropdown id="mycomp" ng-model="searchLibraryShow">
+                                                    <option value="">--Select--</option>
+                                                    <option value="">All</option>
+                                                    <option value="folder">Folder</option>
+                                                    <option value="citation">Citation</option>
+                                                    <option value="document">Document</option>
+                                                    <option value="datasheet">Datasheet</option>
+
+                                                </select>
+                                        </div>
+                                    
+                                    </div>
+                                    
+                                    <div class="resp_clr"></div>
+                                    
+                                    
+                                    <div class="das_group_btns">
+                                        <ul>
+                                            <li><a href="javascript:;"><span class="citations_icon">Citations</span></a></li>
+                                            <li><a href="javascript:;"><span class="data_sheet_icon">Data Sheet </span></a></li>
+                                             <li><a href="javascript:;"><span class="documents_icon">Documents</span></a></li>
+                                        
+                                        </ul>
+                                    
+                                    </div>
+                                    
+                                    
+                                    <div class="das_shorted">
+                                        <label>Sort By:</label>
+                                        
+                                        <div class="drop_down shortby_opt">
+                                            <select msDropdown id="shortedby" ng-model="shortBy" ng-change="shortingOrder()">
+                                                    <option>--Select--</option>
+                                                    <option value="name">Name</option>
+                                                    <option value="type">Type</option>
+                                                    <option value="creater">Creater</option>
+                                                    <option value="updatedAt">Modified</option>
+                                                    <option value="id">Latest</option>
+                                            </select>    
+                                        </div>
+                                    
+                                    </div>
+                                    
+                                    
+                                </div>
+                               <div class="clr"></div>
+                         
+                    </div> 
+                    
+                            <div class="library_list_cont" ng-if="!gridView" data-ng-init="findprojects();getLibItems();">
+                             
+                                   <table class="table table-striped">
+                                          <thead>
+                                                <tr>
+                                                  <th class="project_tbcell1">&nbsp;</th>
+                                                  <th class="project_tbcell2">&nbsp;</th>
+                                                  <th class="project_tbcell3">Name</th>
+                                                  <th class="project_tbcell4">Creater</th>
+                                                  <th class="project_tbcell5">Projects</th>
+                                                  <th class="project_tbcell6">Last Modefied</th>
+                                                  <th class="project_tbcell5">Action</th>
+                                                </tr>
+                                          </thead>
+                                          </table>
+                                          <div ng-repeat="project in projects">
+                                            <table class="table table-striped">
+                                              <tbody>
+                                                <tr >
+                                                  <td class="project_tbcell1">
+                                                    <input ng-model="selectedProject[$index].status" ng-change="selectProject(project.id);" type="checkbox">
+                                                  </td>
+                                                  <td class="project_tbcell2" style="cursor:pointer" ng-click="findProjectLibrary(project.id)"><img src="images/daslist_foldericon.png" alt=""></td>
+                                                  <td class="pra_pro project_tbcell3"><div><a ng-click="findprojectAtt(project)" href="#/project_workspace">{{project.projectname }}</a></div></td>
+                                                  <td class="project_tbcell4">{{project.username }}</td>
+                                                  <td class="project_tbcell5">...<td>
+                                                  <td class="project_tbcell6"> {{convertTime(project.updatedAt) }}</td>
+                                                  <td class="project_tbcell5">
+                                                    <ul class="action-btns">
+                                                      <li><a href="#myModal" class="fa fa-edit" ng-click="editProject(project)" title="Edit" data-toggle="modal"></a></li>
+                                                    </ul>
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                            <div class="inner_fils">
+                                              <div ng-repeat="libItem in projectLibrary[project.id] | filter:searchLibraryShow | filter : searchLibrary | orderBy:shortBy:reverse" >
+                                                <table class="table table-striped" >
+                                                  <tbody >
+                                                    <tr>
+                                                      
+                                                      <td class="project_tbcell1"></td>
+                                                      <td class="project_tbcell2"  ng-if="libItem.type == 'folder'">
+                                                        <i class="fa fa-folder-o"></i>
+                                                      </td>
+                                                      <td class="project_tbcell2" ng-if="libItem.type == 'datasheet'">
+                                                        <i class="fa fa-file-text-o">
+                                                      </td>
+                                                      <td class="project_tbcell2" ng-if="libItem.type == 'citation'">
+                                                        <i class="fa fa-list-alt">
+                                                      </td>
+                                                      <td class="project_tbcell2" ng-if="libItem.type == 'document'">
+                                                        <i class="fa fa-file-o"> 
+                                                      </td>
+                                                        <td class="project_tbcell3">{{libItem.name}}</td>
+                                                        <td class="project_tbcell4">{{libItem.creater}}</td>
+                                                        <td class="project_tbcell5">....</td>
+                                                        <td class="project_tbcell6">{{convertTime(libItem.updatedAt) }}</td>
+                                                        <td class="project_tbcell5">
+                                                          <!-- <a href="#myfolder" ng-click="editProjectLibItem(libItem.id)" ng-if="libItem.type == 'folder'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                                          <a href="#mycitation" ng-click="editProjectLibItem(libItem.id)" ng-if="libItem.type == 'citation'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                                          <a href="#mydatasheet" ng-click="editProjectLibItem(libItem.id)" ng-if="libItem.type == 'datasheet'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                                          <a href="#mydocuments" ng-click="editProjectLibItem(libItem.id)" ng-if="libItem.type == 'document'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                                        
+                                                          <a href="javascript:;" ng-click="deleteProjectLibItem(libItem.id)"><i class="fa fa-trash-o"></i></a> -->
+                                                        </td>
+
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div ng-repeat="libItem in libItems | filter:searchLibraryShow | filter : searchLibrary | orderBy:shortBy:reverse">
+                                            <table class="table table-striped">
+                                              <tbody>
+                                                <tr>
+                                                                          <td class="project_tbcell1">
+                                                                            <input type="checkbox">
+                                                                          </td>
+                                                                          <td class="project_tbcell2"  ng-if="libItem.type == 'folder'">
+                                                                            <i class="fa fa-folder-o"></i>
+                                                                          </td>
+                                                                          <td class="project_tbcell2" ng-if="libItem.type == 'datasheet'">
+                                                                            <i class="fa fa-file-text-o">
+                                                                          </td>
+                                                                          <td class="project_tbcell2" ng-if="libItem.type == 'citation'">
+                                                                            <i class="fa fa-list-alt">
+                                                                          </td>
+                                                                          <td class="project_tbcell2" ng-if="libItem.type == 'document'">
+                                                                            <i class="fa fa-file-o"> 
+                                                                          </td>
+                                                                            <td class="project_tbcell3">{{libItem.name}}</td>
+                                                                            <td class="project_tbcell4">Me</td>
+                                                                            <td class="project_tbcell5">....</td>
+                                                                            <td class="project_tbcell6">{{convertTime(libItem.updatedAt) }}</td>
+                                                                            <td class="project_tbcell5">
+                                                                              <a href="#myfolder" ng-click="editLib(libItem.id)" ng-if="libItem.type == 'folder'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                                                              <a href="#mycitation" ng-click="editLib(libItem.id)" ng-if="libItem.type == 'citation'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                                                              <a href="#mydatasheet" ng-click="editLib(libItem.id)" ng-if="libItem.type == 'datasheet'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                                                              <a href="#mydocuments" ng-click="editLib(libItem.id)" ng-if="libItem.type == 'document'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                                                              <a href="javascript:;" ng-click="deleteLib(libItem.id)"><i class="fa fa-trash-o"></i></a>
+                                                                            </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>      
+                            </div>
+
+                            <div ng-if="gridView" data-ng-init="findprojects();getLibItems();">
+                              <div ng-repeat="project in projects"  class="grid">
+                                <table>
+                                  <tr>
+                                    <td colspan="2"><i class="fa fa-folder-open-o fa-3x"></i></td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <span>
+                                        <input ng-model="selectedProject[$index].status" ng-change="selectProject(project.id);" type="checkbox">
+                                      </span>
+                                      <span>
+                                        <a ng-click="findprojectAtt(project)" href="#/project_workspace" class="active">{{project.projectname }}
+                                        </a>
+                                      </span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <span style="display:inline-block;cursor:pointer">
+                                        <a href="#projectLibraryModel" data-toggle="modal" ng-click = "findProjectLibrary(project.id); projectFileId=project.id">
+                                          <img src="images/daslist_foldericon.png" alt="">
+                                        </a>
+                                      </span>
+                                      <span style="display:inline-block">
+                                        <a href="#myModal" class="fa fa-edit" ng-click="editProject(project)" title="Edit" data-toggle="modal"></a>
+                                      </span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <span>
+                                        {{project.username}}
+                                      </span>
+                                      |
+                                      <span>
+                                        {{convertTime(project.updatedAt)}}
+                                      </span>
+                                      </td>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                              <div ng-repeat="libItem in libItems | filter:searchLibraryShow | filter : searchLibrary | orderBy:shortBy:reverse"  class="grid">
+
+
+                                <table>
+                                  <tr>
+                                    <td ng-if="libItem.type == 'folder'">
+                                      <i class="fa fa-folder-o fa-3x"></i>
+                                    </td>
+                                    <td ng-if="libItem.type == 'datasheet'">
+                                      <i class="fa fa-file-text-o fa-3x">
+                                    </td>
+                                    <td ng-if="libItem.type == 'citation'">
+                                      <i class="fa fa-list-alt fa-3x">
+                                    </td>
+                                    <td ng-if="libItem.type == 'document'">
+                                      <i class="fa fa-file-o fa-3x"> 
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <span>
+                                       <input type="checkbox">
+                                      </span>
+                                      <span>
+                                        {{libItem.name}}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <a href="#myfolder" ng-click="editLib(libItem.id)" ng-if="libItem.type == 'folder'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                      <a href="#mycitation" ng-click="editLib(libItem.id)" ng-if="libItem.type == 'citation'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                      <a href="#mydatasheet" ng-click="editLib(libItem.id)" ng-if="libItem.type == 'datasheet'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                      <a href="#mydocuments" ng-click="editLib(libItem.id)" ng-if="libItem.type == 'document'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+                                      <a href="javascript:;" ng-click="deleteLib(libItem.id)"><i class="fa fa-trash-o"></i>
+                                      </a>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <span>
+                                        Me
+                                      </span>
+                                      |
+                                      <span>
+                                        {{convertTime(libItem.updatedAt)}}
+                                      </span>
+                                      </td>
+                                    </td>
+                                  </tr>
+                                </table>
+
+                              </div>      
+                            </div>
+                    </div>
+                
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- page end-->
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="projectLibraryModel" class="modal fade" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Project Library</h4>
+      </div>
+        <div class="inner_fils">
+        <div ng-if="projectLibrary[projectLibraryId].length == 0">
+          <h3>No library found for this project.</h3>
+        </div>
+         <div ng-repeat="libItem in projectLibrary[projectLibraryId] | filter:searchLibraryShow | filter : searchLibrary | orderBy:shortBy:reverse" ng-if="projectLibrary[projectLibraryId].length > 0">
+          <table class="table table-striped" >
+            <tbody >
+              <tr>
+                
+                <td class="project_tbcell1"></td>
+                <td class="project_tbcell2"  ng-if="libItem.type == 'folder'">
+                  <i class="fa fa-folder-o"></i>
+                </td>
+                <td class="project_tbcell2" ng-if="libItem.type == 'datasheet'">
+                  <i class="fa fa-file-text-o">
+                </td>
+                <td class="project_tbcell2" ng-if="libItem.type == 'citation'">
+                  <i class="fa fa-list-alt">
+                </td>
+                <td class="project_tbcell2" ng-if="libItem.type == 'document'">
+                  <i class="fa fa-file-o"> 
+                </td>
+                  <td class="project_tbcell3">{{libItem.name}}</td>
+                  <td class="project_tbcell4">{{libItem.creater}}</td>
+                  <td class="project_tbcell5">....</td>
+                  <td class="project_tbcell6">{{convertTime(libItem.updatedAt) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+                <!--folder  Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myfolder" class="modal fade">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">&times;</button>
+                          <h4 class="modal-title">{{ModelHeadingText}} Folder</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                          
+                          <form role="form-horizontal" id="projectform">
+                                 <div class="form-group">   
+                                     <p>{{ModelLabelText}} Folder Name</p>
+                                      <input type="text" id="libItemName" placeholder="New Folder" ng-model="libItemName" class="form-control placeholder-no-fix">
+                                       <input type="hidden" id="libItemId" ng-model="libItemId">
+                                </div>
+                    
+                            </form>
+                    
+                      </div>
+                      <div class="modal-footer">
+                       
+                          <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="libItem('folder')">Create New Folder </button>
+                          <button type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- modal -->
+
+           <!--citation  Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="mycitation" class="modal fade">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">&times;</button>
+                          <h4 class="modal-title">{{ModelHeadingText}} Citation</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                          
+                          <form role="form-horizontal" id="projectform">
+                                 <div class="form-group">   
+                                     <p>{{ModelLabelText}} Citation</p>
+                                      <input type="text" placeholder="New Citation" ng-model="libItemName" class="form-control placeholder-no-fix">
+                                       <input type="hidden" ng-model="libItemType" data-ng-init="libItemType='citation'">
+                                       <input type="hidden" ng-model="libItemId">
+                                </div>
+                    
+                            </form>
+                    
+                      </div>
+                      <div class="modal-footer">
+                       
+                          <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="libItem('citation')">Create New Citation </button>
+                          <button type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- modal -->
+          
+          <!-- Datasheet  Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="mydatasheet" class="modal fade">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">&times;</button>
+                          <h4 class="modal-title">{{ModelHeadingText}} Datasheet</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                          
+                          <form role="form-horizontal" id="projectform" >
+                                
+                                 <div class="form-group">   
+                                     <p>{{ModelLabelText}} Datasheet Name</p>
+                                      <input type="text" ng-model="libItemName" placeholder="New Folder"  class="form-control placeholder-no-fix">
+                                      <input type="hidden" ng-model="libItemType" data-ng-init="libItemType='datasheet'">
+                                       <input type="hidden" ng-model="libItemId">
+                                </div>
+                    
+                            </form>
+                    
+                      </div>
+                      <div class="modal-footer">
+                          <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="libItem('datasheet')">Create New Sheet </button>
+                          <button type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- modal --> 
+          
+            
+        
+          
+           <!-- document  Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="mydocuments" class="modal fade">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">&times;</button>
+                          <h4 class="modal-title">{{ModelHeadingText}} Document</h4>
+                      </div>
+                      <div class="modal-body">
+                          
+                          
+                          <form role="form-horizontal" id="projectform" >
+                                
+                                 <div class="form-group">   
+                                     <p>{{ModelLabelText}} Documnet Name</p>
+                                      <input type="text" ng-model="libItemName" placeholder="New Folder"  class="form-control placeholder-no-fix">
+                                      <input type="hidden" ng-model="libItemType" data-ng-init="libItemType='document'">
+                                       <input type="hidden" ng-model="libItemId">
+                                </div>
+                    
+                            </form>
+                    
+                      </div>
+                      <div class="modal-footer">
+                          <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="libItem('document')">Create New Documnet </button>
+                          <button type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+        </section>
+    </section>
+    <!--main content end-->
+</section>
+          <!-- modal --> 
+        

@@ -1,0 +1,1304 @@
+<section class="wrapper">
+<!-- page start-->
+<div class="row">
+	<div class="col-sm-12">
+	<div class="row">
+	  <div class="right_cont" style="min-height:500px;">
+		<div class="library_cont clearfix">
+		  <div class="library_cont_box pull-left">
+						<a data-toggle="modal" href="#myModal" class="das_btns pull-left">
+							<span class="dasbtn_label">{{projectAtt.projectname}}</span>
+							<span class="das_btn_icons">
+								<img src="images/pluse_icon.png" alt="">
+							</span>
+						</a>
+				</div> 
+		</div>
+			   <div class="project-detail" data-ng-init="getDiscussion();findactivity();findProjectTags(); getColaboraters();getAllCommentOnProject();">
+				<div class="row">
+				  <div class="col-md-4">
+					<div class="pd1">
+					  <div class="clearfix form-group srch">
+						  <input type="text" id="searchQueryInProject" class="form-control" projectsearchbox placeholder="Search">
+						  <a href="/#/searchresult" ng-click="search(1)" class="btn btn-primary">Search</a>
+					  </div>
+					
+			
+					<div class="media blg">
+					<h3>Latest Discussion</h3>
+					
+					<div class="post-blog-wrapper" ng-repeat="discussion in discussions">
+					  <a class="pull-left" href="javascript:;">
+						<img class="media-object list-img" src="{{findProfilepicUrl(discussion.createrid)}}" alt="...">
+					  </a>
+					  <div class="media-body">
+						<h5 class="media-heading">{{convertTime(discussion.createdAt)}}</h5>
+						<P>{{discussion.title}}</P>
+					  </div>
+					 </div>
+					  
+					</div>
+				  
+					<div class="recnt-actvity-box">
+					<p class="rcnt-title">Recent Activity</p>
+					<ul class="recnt-actvity">
+					  <li ng-repeat="activity in activities track by $index | orderBy : 'id' : true |  limitTo : 5" ng-if="$index < 5"><i class="fa fa-comments"></i> <span dynamic="activity.activity"></span></li>
+					</ul>
+					</div>
+					<div class="recnt-gallery">
+					<p class="rcnt-title">Project Members</p>
+					<ul class="recnt-gallery" ng-if="colaborators.length > 0">
+					  <li ng-repeat="colaborator in colaborators">
+					  <i class="fa fa-angle-right"></i> 
+					 <!--  <a class="pull-left" href="javascript:;">
+						<img class="media-object list-img" src="{{colaborator.colaborator.profilepic}}" alt="...">
+					  </a> -->
+					  <a ng-click="viewProfile(colaborator.colaborator.id)" class="activity_link ng-scope" href="#/people"><img class="media-object list-img" src="{{colaborator.colaborator.profilepic}}" alt="..."></a>
+					   <a ng-click="viewProfile(colaborator.colaborator.id)" class="activity_link ng-scope" href="#/people">{{colaborator.colaborator.firstname}} {{colaborator.colaborator.lastname}}</a>
+					  </li>
+					</ul>
+					<ul ng-if="colaborators.length == 0">
+						<li> No Project Members</li>
+					</ul>
+					</div>
+					
+					</div>
+				  </div>
+				  <div class="col-md-8 ">
+				  <div class="pd2">
+				  <h2 dynamic="projectAtt.projectname"></h2>
+				  <p class="invstigtr-dtl">By <span class="invstigtr" dynamic="projectAtt.username"></span> | <span dynamic="convertTime(projectAtt.createdAt)"></span> | <span ng-if="totalComments > 0" class="invstigtr"><a href="#/project_comments">{{totalComments}} Comments</a></span><span ng-if="!totalComments > 0" class="invstigtr">No Comments</span></p>
+				  
+					  <p dynamic="projectAtt.projectdesc"></p>
+					  <p><span ng-repeat="tagssuggestion in tagssuggestions">
+						<a  href="javascript:;" class="activity_link">&nbsp{{tagssuggestion}}&nbsp</a>
+					  </span></p>
+				   </div>
+				  </div>
+				 </div>
+			   </div>
+		
+				<div class="ibrary_header">
+					<div class="col-md-6, col-sm-6 col-xs-12">
+					</div>
+					<div class="col-md-6, col-sm-6 col-xs-12">
+						<div class="topsocial_medies pull-right">
+							<a class="topfacebook_icon" href="javascript:;" ng-click="fbshare()">Facebook</a>
+							<a class="toptwitter_icon" target="_blank" href="http://twitter.com/home?status=http://localhost:1337/#/project_workspace">twitter</a>
+							<a class="topgplus_icon" target="_blank" href="https://plusone.google.com/_/+1/confirm?hl=en&url=http://localhost:1337/#/project_workspace">Google Plus</a>
+							<a class="topemail_icon" href="javascript:;">mail</a>
+							<span class="imbed_tag"><a  href="javascript:;"> &#60; &#47; &#62;EMBED</a></span>
+						</div>
+					</div>
+			   
+					<div class="clr"></div>
+				</div> 
+		  
+		<div class="das_alllist_cont">
+		  <div class="das_alllist_header1">
+			<div class="col-md-12, col-sm-12 col-xs-12">
+							<div class="pro_fetabs">
+								<ul class="nav nav-tabs nav-justified ">
+									<li >
+										<a data-toggle="tab" href="#a">
+											Overview
+										</a>
+									</li>
+									<li>
+										<a ng-click="findactivity()" data-toggle="tab" href="#b">
+											Activity
+										</a>
+									</li>
+									<li class="active">
+										<a data-toggle="tab" href="#c" class="contact-map" data-ng-init="getLabBookComments()">
+											Lab Book
+										</a>
+									</li>
+									<li>
+										<a data-toggle="tab" href="#d" class="contact-map">
+											Library
+										</a>
+									</li>
+									<li>
+										<a data-toggle="tab" href="#e" class="contact-map">
+											Task Manager
+										</a>
+									</li>
+									<li>
+										<a data-toggle="tab" ng-click="resetDiscussionForm()"  id="discussion" href="#f" class="contact-map">
+											Forum
+										</a>
+									</li>
+								</ul>
+								<div class="daspro_profea_icons pull-right" data-ng-init="isFavourites();">
+									<a href="javascript:;" ng-click="addFavourites()" ng-if="!favourites">
+										<i class="das_btns sp_dasicons add_hearticon" title="mark as Favourites">Favourites</i>
+									</a>
+									<a href="javascript:;" ng-click="removeFavourites()" ng-if="favourites">
+										<i class="das_btns sp_dasicons add_hearticon" title="remove as Favourites">Favourites</i>
+									</a>
+									<a class="das_btns sp_dasicons add_commenticon" href="javascript:;">Message</a>
+									<a class="das_btns sp_dasicons add_newnoteicon" href="javascript:;">Message</a>
+									<a data-toggle="modal" ng-click="getUserSuggession('colaboration')" href="#addColaborator">
+										<i class="das_btns sp_dasicons add_usericon">Add User</i>
+									</a>
+									<a class="das_btns sp_dasicons add_alerticon" href="#/project_management">Alert</a>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</div>
+			<div class="clr"></div>
+		  </div> 
+		  <div class="library_list_cont">
+			<div class="panel-body" data-ng-init ="findprojectsfiles(projectAtt.id)">
+							<div class="tab-content tasi-tab" >
+								<div class="tab-pane " id="a" >
+									<h3 dynamic="projectAtt.projectname"></h3><br/>
+									<div ng-if="projectAtt.username">
+										<h5>Owner </h5><h4 dynamic="projectAtt.username"></h4><br/>
+									</div>
+									<div ng-if="projectAtt.projectdesc">
+										<h5>Description </h5><h4 dynamic="projectAtt.projectdesc"></h4><br/>
+									</div>
+									<div ng-if="projectAtt.abstract">
+										<h5>Abstract </h5><h4 dynamic="projectAtt.abstract"></h4><br/>
+									</div>
+									<div>
+										<h5>Is Private </h5><h4 dynamic="projectAtt.isPrivate"></h4><br/>
+									</div>
+									<div ng-if="projectAtt.projectType">
+										<h5>Project Type </h5><h4 dynamic="projectAtt.projectType"></h4><br/>
+									</div>
+									<div>
+										<h5>Created At </h5><h4 dynamic="projectAtt.createdAt"></h4><br/>
+									</div>
+									<div>
+										<h5>Last Updated At </h5><h4 dynamic="projectAtt.updatedAt"></h4><br/>
+									</div>
+									<div><a href="javascript:;" ng-click='$("#discussion").trigger("click")'>Start Discussion</a></div>
+								</div>
+								<div class="tab-pane" id="b">
+									<div class="new_feedlist">
+										<section id="flip-scroll">
+											<table class="table table-striped new_feedtable">								
+												<tbody>
+													<tr ng-repeat="activity in activities">
+														<td width="25" class="feed_pic" valign="middle"></td>
+														<td>
+															<span class="feed_user" >{{activity.creater}}</span> 
+															<span class="news_feed_post" ><p dynamic="activity.activity"></p></span>
+															<span class="news_feed_date"><a id="{{activity.id}}" href="javascript:;" ng-click="opencommentbox(activity.id)">Comments</a> * {{convertTime(activity.createdAt)}}</span>
+															
+															<div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+
+																<div class="all_comments" data-ng-init ="findcomments(activity.id)" >
+																	<div ng-repeat="comm in commArr[activity.id]" >
+																		<div class="detail-img-name recent-thumb bordbott clearfix">
+																			<img src="{{user.profilepic}}" > 
+																			<span class="feed_user">
+																				<a href="/profile">{{comm.creater}} </a>
+																				<p class="comdetails">{{comm.comments}}</p>
+																			</span>									
+																			<div class="date-time">
+																				<a href="#">flag</a> posted on  {{convertTime(comm.createdAt)}}
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<img src="{{user.profilepic}}" >
+																<textarea id="a{{activity.id}}" placeholder="Comments..."></textarea>
+																<button class="btn btn-primary" type="submit" ng-click="createcommnets(activity.id)">Post</button>
+							  							</div>					
+														</td>
+													</tr>
+												</tbody>
+											</table>
+					</section>
+									</div>
+								</div>
+								<div class="tab-pane active" id="c">
+									<!-- Create New Entry -->
+									<div class="create-new-entry clearfix">
+										<h4>Create New Entry:</h4>
+										<a ng-click="removeEntry()" href="#myNote" data-toggle="modal"><i class="icon-plusround"></i> Note</a>
+										<a ng-click="removeEntry()" href="#myLitrature" data-toggle="modal"><i class="icon-plusround"></i> Literature</a>
+										<a ng-click="removeEntry()" href="#myprotocol" data-toggle="modal"><i class="icon-plusround"></i> Protocol</a>
+										<a ng-click="removeEntry()" href="#myexperiment" data-toggle="modal"><i class="icon-plusround"></i> Experiment</a>
+									</div>
+									<!-- Create New Entry End -->
+									<div class="search_library full-wdt">                      	
+					   <input type="text" ng-model="searchnote" placeholder="Search Library">
+					   <input type="image" class="lib_searchicon" src="images/search_icon1.png">
+				  </div>
+								  <div class="all-select-wrap clearfix">
+									<div class="drop_down labselectbox">
+					  <select msdropdown id="draff" ng-model="orderList">
+							<option value="createdAt">Draft entries first</option>
+												<option value="-updatedAt">Newest first </option>  
+							<option value="updatedAt">Oldest first </option>
+					  </select>
+					</div>
+										<div class="drop_down labselectbox">
+					  <select msdropdown id="typeo" >
+						  <option>Display all</option>
+						  <option>Notes</option>
+						  <option>Experimental</option>
+						  <option>Literature</option>
+						  <option>Protocol</option>
+					  </select>
+					</div>
+									  <div class="drop_down labselectbox">
+						<select msdropdown id="authorn">
+							<option>Author</option>
+							<option>{{projectAtt.username}}</option>
+						</select>
+					</div>
+										<div class="drop_down labselectbox">
+					  <select msdropdown id="tags">
+						  <option>Tags</option>                    
+					  </select>
+							</div>
+									  <div class="drop_down labselectbox">
+					  <select msdropdown id="datas">
+						  <option>Data</option>  
+						  <option>Display all</option>  
+						  <option>Unclassified</option>  
+						  <option>Raw data</option>  
+						  <option>Processed data</option>  
+						  <option>Final data</option>  													
+					  </select>
+					</div>
+										<div class="editss-wrap">
+											<a href="javascript:;" ng-click="displayStaredLabItems()" class="disstrr-item" id="display-stared-labitems"><span>Display only starred items</span></a>
+											<a href="javascript:;" ng-click="displayDraftLadItems()" class="disdraff-item" id="display-draft-labitems"><span>Display only draft items</span></a>
+											<a href="javascript:;" ng-click="displayArchivedItems()" class="disarchi-item"><span>Display only archived items</span></a>
+											<a href="javascript:;" ng-click="resetDisplayLabItems()" class="disreset-item"><span>Reset</span></a>
+										</div>
+										<!-- start note div -->
+										<div class="all_note  Notes" id="note_div" data-ng-init = "findnote()">
+											<div class="new-note-wrap" ng-repeat="note in notes | filter:searchnote | filterLabitems: isDisplayStarredLab:isDisplayDraftLab:isDisplayArchivedLab |  orderBy: orderList">
+												<div class="note-head clearfix" style="cursor:pointer" ng-click="showItem('note_'+$index);" data-ng-init="isStared[note.id]=note.isStared">
+													<span class="stars active" ng-if="isStared[note.id]" id="stars{{note.id}}" ng-click="removeStarsLabBook(note.id, note.isStared);"></span>
+													<span class="stars" ng-if="!isStared[note.id]" id="stars{{note.id}}" ng-click="starsLabBook(note.id);"></span>
+													<span class="head-text">{{note.name}}</span>
+													<span class="file-format" ng-repeat="tag in tags[note.id]">{{tag}}</span>
+													<div class="pull-right link-count-wrap">
+														<a href="#" class="file-link"></a>
+														<a href="#" class="file-count">{{note.files.length}}</a>
+													</div>
+												</div>
+												<div class="row entry-wrap clearfix" style="display:none" id="note_{{$index}}">
+													<div class="col-md-10 col-sm-12 col-xs-12 padd-left">
+														<div class="row">
+															<div class="col-md-12 col-sm-12 col-xs-12">
+																<span class="date-det"><strong>ENTRY TYPE:</strong> Note </span>
+																<span class="date-det"><strong>LAST UPDATED:</strong> {{lastnoteupdateArr[note.id]}}</span>
+																<span class="date-det"><strong>DATA TYPE:</strong> {{note.notetype}}</span>
+															</div>
+															<div class="col-md-3 col-sm-3 col-xs-12">
+																<a href="#" class="detail-img-name clearfix">
+																	<img src="{{user.profilepic}}" />
+																	<span dynamic="note.creater"> </span>
+																</a>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-2 col-sm-12 col-xs-12">
+														<a href="#myNote" ng-click="getEditEntry(note, 'note')"  data-toggle="modal" id= {{note.id}}  class="edit-entry">EDIT ENTRY</a>
+														<a href="#/note_history" ng-click="getNoteHistory(note.id)" class="see-history">SEE HISTORY</a>
+														<a href="javascript:;" ng-if="!note.isArchived" ng-click="archivedlab(note.id, 1)" class="see-history">Make Archived</a>
+														<a href="javascript:;" ng-if="note.isArchived" ng-click="archivedlab(note.id, 0)" class="see-history">Remove Archived</a>
+													</div>
+													<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"></div>
+													<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"><span dynamic="note.description"></span></div>
+													<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+														<div style="display:inline-block; padding:20px;" ng-repeat="file in note.files">
+															
+
+														<a href="{{file.filepath}}">
+															<i class="fa {{file.filename | filesFilter}} fa-3x">
+															</i>
+															{{file.filename}}
+														</a>
+														</div>
+													</div>
+													<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+
+														<span class="news_feed_date">
+														<a id="l{{note.id}}" href="javascript:;" ng-click="openlabcommentbox(note.id)">Comments</a> * {{convertTime(note.createdAt)}}
+														</span>
+														
+														<div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+
+
+															<div class="all_comments" >
+																<div ng-repeat="comm in labBookComments | filterLabComment : note.id">
+																	<div class="detail-img-name recent-thumb bordbott clearfix">
+																	<img src="{{findProfilepicUrl(comm.createrid)}}" > 
+																	<span class="feed_user"  dynamic="comm.creater">
+																	</span><br>							
+																	<p class="comdetails">{{comm.comment}}</p>
+																	<div class="date-time"> <a href="#">flag</a> posted on  {{convertTime(comm.createdAt)}} </div>
+																	</div>
+																</div>
+															</div>
+
+															<img src="{{user.profilepic}}" > 
+															<textarea id="ll{{note.id}}" placeholder="Comments..."></textarea>
+															<button class="btn btn-primary" type="submit" ng-click="createLabCommnets(note.id)">Post</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- end note div -->
+											
+											<!-- start litrature div -->
+											<div class="all_note  Literature" id="litrature_div" data-ng-init = "findlitrature()">	
+												
+										<div class="new-note-wrap" ng-repeat="litrature in litratures | filter:searchnote | filterLabitems: isDisplayStarredLab:isDisplayDraftLab:isDisplayArchivedLab| orderBy: orderList">
+											<div  style="cursor:pointer"  ng-click="showItem('literature_'+$index);" class="note-head clearfix" data-ng-init="isStarred[litrature.id]=litrature.isStared">
+													<span class="stars active" ng-if="isStared[litrature.id]" id="stars{{litrature.id}}" ng-click="removeStarsLabBook(litrature.id);"></span>
+													<span class="stars" ng-if="!isStared[litrature.id]" id="stars{{litrature.id}}" ng-click="starsLabBook(litrature.id);"></span>
+													<span class="head-text">{{litrature.name}}</span>
+													<span class="file-format" ng-repeat="tag in lit_tag[litrature.id]">{{tag}}</span>
+													<div class="pull-right link-count-wrap">
+														<a href="#" class="file-link"></a>
+														<a href="#" class="file-count">
+															{{litrature.files.length}}
+														</a>
+													</div>
+											</div>
+											
+											<div class="row entry-wrap clearfix" id="literature_{{$index}}" style="display:none">
+												<div class="col-md-10 col-sm-12 col-xs-12 padd-left">
+													<div class="row">
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<span class="date-det"><strong>ENTRY TYPE:</strong> Litrature </span>
+															<span class="date-det"><strong>LAST UPDATED:</strong> {{lastlitupdateArr[litrature.id]}}</span>
+														</div>
+														<div class="col-md-3 col-sm-3 col-xs-12">
+															<a href="#" class="detail-img-name clearfix">
+															<img src="{{user.profilepic}}" />
+															<span dynamic="litrature.creater"></span>											 
+															</a>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 col-sm-12 col-xs-12">
+													<a href="#myLitrature"   ng-click="getEditEntry(litrature, 'litrature')" data-toggle="modal" class="edit-entry">EDIT ENTRY</a>
+													<a href="#/litrature_history" ng-click="getLitratureHistory(litrature.id)" class="see-history">SEE HISTORY</a>
+												</div>
+												<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+													<h4>Abstract</h4>
+													<span dynamic="litrature.abstarct"></span>
+												</div>
+												<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+													<h4>Highlight</h4>
+													<span dynamic="litrature.highlight"></span>
+												</div>
+												<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+													<div style="display:inline-block; padding:20px" ng-repeat="file in litrature.files">
+														
+														<span>
+															<a href="{{file.filepath}}">
+															<i class="fa {{file.filename | filesFilter}} fa-3x"></i>
+															{{file.filename}}</a>
+														</span>
+													</div>
+												</div>
+												<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+													<span class="news_feed_date">
+													<a id="l{{litrature.id}}" href="javascript:;" ng-click="openlabcommentbox(litrature.id)">Comments</a> * {{convertTime(litrature.createdAt)}}
+													</span>
+													<div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+														<div class="all_comments" >
+															<div ng-repeat="comm in labBookComments | filterLabComment : litrature.id">
+																<div class="detail-img-name recent-thumb bordbott clearfix">
+																	<img src="{{findProfilepicUrl(comm.createrid)}}" > 
+																	<span class="feed_user" dynamic="comm.creater"></span>
+																	<br>
+																	<p class="comdetails">{{comm.comment}}</p>	
+																	<div class="date-time"> <a href="#">flag</a> posted on  {{convertTime(comm.createdAt)}} </div>
+																</div>
+															</div>
+														</div>
+														<img src="{{user.profilepic}}" > 
+														<textarea id="ll{{litrature.id}}" placeholder="Comments..."></textarea>
+														<button class="btn btn-primary" type="submit" ng-click="createLabCommnets(litrature.id)">Post</button>
+													</div>
+												</div>												
+											</div>
+											
+										</div>	
+							</div>
+					
+											<!-- end litrature div -->
+											
+											
+											<!-- start Protocol div -->
+										<div class="all_note  Protocol" id="protocol_div" data-ng-init = "findprotocol()">	
+											
+											
+											<div class="new-note-wrap" ng-repeat="protocol in protocols | filter:searchnote | filterLabitems: isDisplayStarredLab:isDisplayDraftLab:isDisplayArchivedLab| orderBy: orderList">
+											<div style="cursor:pointer"  ng-click="showItem('protocol_'+$index);" class="note-head clearfix" data-ng-init="isStared[protocol.id]=protocol.isStared">
+													<span class="stars active" ng-if="isStared[protocol.id]" id="stars{{protocol.id}}" ng-click="removeStarsLabBook(protocol.id);"></span>
+													<span class="stars" ng-if="!isStared[protocol.id]" id="stars{{protocol.id}}" ng-click="starsLabBook(protocol.id);"></span>
+													
+													<span class="head-text">{{protocol.name}}</span>
+													<span class="file-format" ng-repeat="tag in pro_tag[protocol.id]">{{tag}}</span>
+													<div class="pull-right link-count-wrap">
+														<a href="#" class="file-link"></a>
+														<a href="#" class="file-count">
+															{{protocol.files.length}}
+														</a>
+													</div>
+											</div>
+											
+											<div class="row entry-wrap clearfix" style="display:none" id="protocol_{{$index}}">
+												
+												<div class="col-md-10 col-sm-12 col-xs-12 padd-left">
+													<div class="row">
+													
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<span class="date-det"><strong>ENTRY TYPE:</strong> Protocol </span>
+																<span class="date-det"><strong>LAST UPDATED:</strong> {{lastproupdateArr[protocol.id]}}</span>
+																
+													</div>
+													
+													
+													<div class="col-md-3 col-sm-3 col-xs-12">
+														<a href="#" class="detail-img-name clearfix">
+														<img src="{{user.profilepic}}" />{{comm}}
+														<span dynamic="protocol.creater"></span>											 
+														</a>
+														
+													</div>
+												</div>
+												
+												
+											</div>
+											
+											
+											
+											<div class="col-md-2 col-sm-12 col-xs-12">
+												<a href="#myprotocol"  ng-click="getEditEntry(protocol, 'protocol')" data-toggle="modal" class="edit-entry">EDIT ENTRY</a>
+												<a href="#/protocol_history" ng-click="getProtocolHistory(protocol.id)" class="see-history">SEE HISTORY</a>
+											</div>
+											
+											
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+											<h4>Matereial</h4>
+											<span dynamic="protocol.materials"></span></div>
+											
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+												<h4>Procedure</h4>
+												<span dynamic="protocol.procedure"></span>
+											</div>
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+												<div style="display:inline-block; padding:20px" ng-repeat="file in protocol.files">
+													
+													<span>
+														<a href="{{file.filepath}}"><i class="fa {{file.filename | filesFilter}} fa-3x"></i>{{file.filename}}</a>
+													</span>
+												</div>
+											</div>
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+												<span class="news_feed_date">
+												<a id="l{{protocol.id}}" href="javascript:;" ng-click="openlabcommentbox(protocol.id)">Comments</a> * {{convertTime(protocol.createdAt)}}
+												</span>
+												
+												<div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+
+													<div class="all_comments" >
+														<div ng-repeat="comm in labBookComments | filterLabComment : protocol.id">
+															<div class="detail-img-name recent-thumb bordbott clearfix">
+															<img src="{{findProfilepicUrl(comm.createrid)}}" > 
+															<span class="feed_user" dynamic="comm.creater">
+															</span> <br>
+															<p class="comdetails">{{comm.comment}}</p>							
+															<div class="date-time"> <a href="#">flag</a> posted on  {{convertTime(comm.createdAt)}} </div>
+															</div>
+														</div>
+													</div>
+
+													<img src="{{user.profilepic}}" > 
+													<textarea id="ll{{protocol.id}}" placeholder="Comments..."></textarea>
+													<button class="btn btn-primary" type="submit" ng-click="createLabCommnets(protocol.id)">Post</button>
+												</div>
+											</div>
+											
+										</div>
+										
+								</div>	
+											
+
+							</div>
+							
+											<!-- end protocol div -->
+											
+										<!-- start experiment div -->
+											<div class="all_note  Experimental" id="experiment_div" data-ng-init = "findexperiments()">	
+											
+											
+											<div class="new-note-wrap" ng-repeat="experiment in experiments | filter:searchnote | filterLabitems: isDisplayStarredLab:isDisplayDraftLab:isDisplayArchivedLab | orderBy: orderList">
+											<div style="cursor:pointer" ng-click="showItem('experiment_'+$index);" class="note-head clearfix" data-ng-init="isStarred[experiment.id]=experiment.isStared">
+
+													<span class="stars active" ng-if="isStared[experiment.id]" id="stars{{experiment.id}}" ng-click="removeStarsLabBook(experiment.id);"></span>
+													<span class="stars" ng-if="!isStared[experiment.id]" id="stars{{experiment.id}}" ng-click="starsLabBook(experiment.id);"></span>
+													<span class="head-text">{{experiment.name}}</span>
+													<span class="file-format" ng-repeat="tag in exp_tag[experiment.id]">{{tag}}</span>
+													<div class="pull-right link-count-wrap">
+														<a href="#" class="file-link"></a>
+														<a href="#" class="file-count">
+															{{experiment.files.length}}
+														</a>
+													</div>
+											</div>
+											
+											<div style="display:none" class="row entry-wrap clearfix" id="experiment_{{$index}}">
+												
+												<div class="col-md-10 col-sm-12 col-xs-12 padd-left">
+													<div class="row">
+													
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<span class="date-det"><strong>ENTRY TYPE:</strong> Experiment </span>
+																<span class="date-det"><strong>LAST UPDATED:</strong> {{lastexpupdateArr[experiment.id]}}</span>
+																
+													</div>
+													
+													
+													<div class="col-md-3 col-sm-3 col-xs-12">
+														<a href="#" class="detail-img-name clearfix">
+														<img src="{{user.profilepic}}" />
+														<span dynamic="experiment.creater"></span>											 
+														</a>
+														
+													</div>
+												</div>
+												
+												
+											</div>
+											
+											
+											
+											<div class="col-md-2 col-sm-12 col-xs-12">
+												<a href="#myexperiment"  ng-click="getEditEntry(experiment, 'experiment')" data-toggle="modal" class="edit-entry">EDIT ENTRY</a>
+												<a href="#/experiment_history" ng-click="getExperimentHistory(experiment.id)" class="see-history">SEE HISTORY</a>
+											</div>
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"><h4>Background</h4>
+											<span dynamic="experiment.background"></span></div>
+											
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"><h4>Result</h4>
+											<span dynamic="experiment.result"></span>
+											</div>
+											
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph"><h4>Conclusion</h4>
+											<span dynamic="experiment.conclusion"></span></div>
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+												<div style="display:inline-block; padding:20px" ng-repeat="file in experiment.files">
+													<span>
+														
+														<a href="{{file.filepath}}"><i class="fa {{file.filename | filesFilter}} fa-3x"></i>{{file.filename}}</a>
+													</span>
+												</div>
+											</div>
+											<div class="col-md-12 col-sm-12 col-xs-12 dwn-pragraph">
+												<span class="news_feed_date">
+												<a id="l{{experiment.id}}" href="javascript:;" ng-click="openlabcommentbox(experiment.id)">Comments</a> * {{convertTime(experiment.createdAt)}}
+												</span>
+												
+												<div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+													<div class="all_comments" >
+														<div ng-repeat="comm in labBookComments | filterLabComment : experiment.id">
+															<div class="detail-img-name recent-thumb bordbott clearfix">
+															<img src="{{findProfilepicUrl(comm.createrid)}}" > 
+															<span class="feed_user" dynamic="comm.creater">
+															</span> <br>
+															<p class="comdetails">{{comm.comment}}</p>							
+															<div class="date-time"> <a href="#">flag</a> posted on  {{convertTime(comm.createdAt)}} </div>
+															</div>
+														</div>
+													</div>
+													<img src="{{user.profilepic}}" > 
+													<textarea id="ll{{experiment.id}}" placeholder="Comments..."></textarea>
+													<button class="btn btn-primary" type="submit" ng-click="createLabCommnets(experiment.id)">Post</button>
+												</div>
+											</div>
+										</div>
+								</div>	
+							</div>
+											<!-- end experiment div -->
+											</div>
+											</div>
+											<div class="tab-pane" id="d" ng-controller="libController">
+												
+		<div class="row" data-ng-init="getProjectLibItems()">
+			<div class="col-sm-12">
+				<div class="row">
+				   <div class="right_cont" style="min-height:500px;">
+					
+					<div class="ibrary_header"> 
+					   <div class="clr"></div>
+					</div>  
+					<div class="das_alllist_cont">
+							<div class="das_alllist_header">
+							   <div class="col-md-12, col-sm-12 col-xs-12">
+									
+									<div class="das_btns clearfix pull-left">
+											<div class="dasbtn_label"><span>Create</span>
+											
+												 <div class="doc_mode">
+												<ul>
+													<li><a href="#myfolder" data-toggle="modal">Folder</a></li>
+													<li><a href="#mycitation" data-toggle="modal">Citation List</a></li>
+													<li><a href="#mydatasheet" data-toggle="modal">Data sheet</a></li>
+													<li><a href="#mydocuments" data-toggle="modal">Document</a></li>
+												
+												</ul>
+											
+											</div>
+											 </div> 
+								
+											 <div class="das_btn_icons">
+								 <img src="images/arrow_up.png" alt="">
+								 <input type="file" class="ak_upload">
+							 </div>
+									 </div>
+									
+									<div class="search_library">
+										
+										<input type="text" ng-model="searchLibrary" placeholder="Search Library">
+										<input  type="image" src="images/search_icon1.png" class="lib_searchicon">
+									</div>
+									
+									<div class="show_all_labopt">
+									
+										<label>Show:</label>
+												
+										<div class="drop_down labselectbox">
+												<select msDropdown id="mycomp" ng-model="searchLibraryShow">
+													<option value="">--Select--</option>
+													<option value="">All</option>
+													<option value="folder">Folder</option>
+													<option value="citation">Citation</option>
+													<option value="document">Document</option>
+													<option value="datasheet">Datasheet</option>
+
+												</select>
+										</div>
+									
+									</div>
+									
+									<div class="resp_clr"></div>
+									
+									<div class="das_shorted">
+										<label>Sort By:</label>
+										
+										<div class="drop_down shortby_opt">
+											<select msDropdown id="shortedby" ng-model="shortBy" ng-change="shortingOrder()">
+													<option>--Select--</option>
+													<option value="name">Name</option>
+													<option value="type">Type</option>
+													<option value="creater">Creater</option>
+													<option value="updatedAt">Modified</option>
+													<option value="id">Latest</option>
+											</select>    
+										</div>
+									
+									</div>
+									
+									
+								</div>
+							   <div class="clr"></div>
+						 
+					</div> 
+					
+							<div class="library_list_cont">
+							 
+								   <table class="table table-striped">
+										  <thead>
+												<tr>
+												  <th widht="12">&nbsp;</th>
+												  <th widht="12">&nbsp;</th>
+												  <th>Name</th>
+												  <th>Creater</th>
+												  <th>Projects</th>
+												  <th>Last Modefied</th>
+												  <th>Action</th>
+												</tr>
+										  </thead>
+										  <tbody>
+											<tr ng-repeat="libItem in projectLibraryItems | filter:searchLibraryShow | filter : searchLibrary | orderBy:shortBy:reverse">
+												  <td width="12"><input type="checkbox"></td>
+												<td width="12"  ng-if="libItem.type == 'folder'">
+												  <i class="fa fa-folder-o"></i>
+												</td>
+												<td width="12" ng-if="libItem.type == 'datasheet'">
+												  <i class="fa fa-file-text-o">
+												</td>
+												<td width="12" ng-if="libItem.type == 'citation'">
+												  <i class="fa fa-list-alt">
+												</td>
+												<td width="12" ng-if="libItem.type == 'document'">
+												  <i class="fa fa-file-o"> 
+												</td>
+												  <td width="300">{{libItem.name}}</td>
+												  <td>{{libItem.creater}}</td>
+												  <td>....</td>
+												  <td>{{convertTime(libItem.updatedAt) }}</td>
+												  <td>
+													<a href="#myfolder" ng-click="editProjectLibItem(libItem.id)" ng-if="libItem.type == 'folder'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+													<a href="#mycitation" ng-click="editProjectLibItem(libItem.id)" ng-if="libItem.type == 'citation'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+													<a href="#mydatasheet" ng-click="editProjectLibItem(libItem.id)" ng-if="libItem.type == 'datasheet'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+
+													<a href="#mydocuments" ng-click="editProjectLibItem(libItem.id)" ng-if="libItem.type == 'document'" data-toggle="modal"><i class="fa fa-edit"></i></a>
+												  
+													<a href="javascript:;" ng-click="deleteProjectLibItem(libItem.id)"><i class="fa fa-trash-o"></i></a>
+												  </td>
+												</tr>
+										  </tbody>
+									 </table>
+							</div>
+					</div>
+				
+				</div>
+				</div>
+			</div>
+
+					  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myfolder" class="modal fade">
+			  <div class="modal-dialog">
+				  <div class="modal-content">
+					  <div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">&times;</button>
+						  <h4 class="modal-title">{{ModelHeadingText}} Folder</h4>
+					  </div>
+					  <div class="modal-body">
+						  
+						  
+						  <form role="form-horizontal" id="projectform">
+								 <div class="form-group">   
+									 <p>{{ModelLabelText}} Folder Name</p>
+									  <input type="text" id="libItemName" placeholder="New Folder" ng-model="libItemName" class="form-control placeholder-no-fix">
+									   <input type="hidden" id="libItemId" ng-model="libItemId">
+								</div>
+					
+							</form>
+					
+					  </div>
+					  <div class="modal-footer">
+					   
+						  <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="addProjectLibraryItem('folder')">Create New Folder </button>
+						  <button type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">Close</button>
+					  </div>
+				  </div>
+			  </div>
+		  </div>
+		  <!-- modal -->
+
+		   <!--citation  Modal -->
+		  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="mycitation" class="modal fade">
+			  <div class="modal-dialog">
+				  <div class="modal-content">
+					  <div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">&times;</button>
+						  <h4 class="modal-title">{{ModelHeadingText}} Citation</h4>
+					  </div>
+					  <div class="modal-body">
+						  
+						  
+						  <form role="form-horizontal" id="projectform">
+								 <div class="form-group">   
+									 <p>{{ModelLabelText}} Citation</p>
+									  <input type="text" placeholder="New Citation" ng-model="libItemName" class="form-control placeholder-no-fix">
+									   <input type="hidden" ng-model="libItemType" data-ng-init="libItemType='citation'">
+									   <input type="hidden" ng-model="libItemId">
+								</div>
+					
+							</form>
+					
+					  </div>
+					  <div class="modal-footer">
+					   
+						  <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="addProjectLibraryItem('citation')">Create New Citation </button>
+						  <button type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">Close</button>
+					  </div>
+				  </div>
+			  </div>
+		  </div>
+		  <!-- modal -->
+		  
+		  <!-- Datasheet  Modal -->
+		  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="mydatasheet" class="modal fade">
+			  <div class="modal-dialog">
+				  <div class="modal-content">
+					  <div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">&times;</button>
+						  <h4 class="modal-title">{{ModelHeadingText}} Datasheet</h4>
+					  </div>
+					  <div class="modal-body">
+						  
+						  
+						  <form role="form-horizontal" id="projectform" >
+								
+								 <div class="form-group">   
+									 <p>{{ModelLabelText}} Datasheet Name</p>
+									  <input type="text" ng-model="libItemName" placeholder="New Folder"  class="form-control placeholder-no-fix">
+									  <input type="hidden" ng-model="libItemType" data-ng-init="libItemType='datasheet'">
+									   <input type="hidden" ng-model="libItemId">
+								</div>
+					
+							</form>
+					
+					  </div>
+					  <div class="modal-footer">
+						  <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="addProjectLibraryItem('datasheet')">Create New Sheet </button>
+						  <button type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">Close</button>
+					  </div>
+				  </div>
+			  </div>
+		  </div>
+		  <!-- modal --> 
+		  
+			
+		
+		  
+		   <!-- document  Modal -->
+		  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="mydocuments" class="modal fade">
+			  <div class="modal-dialog">
+				  <div class="modal-content">
+					  <div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">&times;</button>
+						  <h4 class="modal-title">{{ModelHeadingText}} Document</h4>
+					  </div>
+					  <div class="modal-body">
+						  
+						  
+						  <form role="form-horizontal" id="projectform" >
+								
+								 <div class="form-group">   
+									 <p>{{ModelLabelText}} Documnet Name</p>
+									  <input type="text" ng-model="libItemName" placeholder="New Folder"  class="form-control placeholder-no-fix">
+									  <input type="hidden" ng-model="libItemType" data-ng-init="libItemType='document'">
+									   <input type="hidden" ng-model="libItemId">
+								</div>
+					
+							</form>
+					
+					  </div>
+					  <div class="modal-footer">
+						  <button data-dismiss="modal" class="btn btn-default" type="button" ng-click="addProjectLibraryItem('document')">Create New Documnet </button>
+						  <button type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="resetLibraryModel()">Close</button>
+					  </div>
+				  </div>
+			  </div>
+		  </div>
+		</div>
+											</div>
+											<div class="tab-pane" id="e">
+												5
+											</div>
+											<div class="tab-pane" id="f" ng-controller="libController">												
+												<div style="1px solid lightgray;margin-top: 50px;padding: 15px;"> 	
+													<form id="discussion_form" ng-submit="createNewDiscussion()">
+														<div class="form-group">	
+															<h3>Create New Discussion</h3>
+														</div>
+														<div class="form-group">	
+															<p>Title</p>
+															<input type="text" id="discussion_title" placeholder="Enter Discussion Title"  class="form-control placeholder-no-fix" required>
+														</div>									
+														<div class="compose-editor">
+													<p>Discription</p>
+												  <textarea wysihtml5 class="form-control" rows="9" id="duscussion_description"></textarea>
+												</div>
+												  <div>
+													<button class="btn btn-default" type="submit">Save </button>
+													</div>
+												</form>
+											</div>
+											<div>
+													<section id="flip-scroll">
+														<table class="table table-striped new_feedtable">							
+															<tbody>
+																<tr ng-repeat="discussion in discussions">
+																	<td width="25" class="feed_pic" valign="middle"></td>
+																	<td>
+																		<span class="feed_user">{{discussion.creatername}}</span><br/>
+																		<span class="news_feed_post" ><h4>{{discussion.title}}</h4></span><br/>
+																		<span class="news_feed_post" ><p><span dynamic="discussion.description"></span></p></span>
+																		<span class="news_feed_date"><a id="{{discussion.id}}" href="javascript:;" ng-click="opencommentbox(discussion.id)">Comments</a> * {{convertTime(discussion.createdAt)}}</span>
+																		
+																		<div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+																			<div class="all_comments" data-ng-init ="findDiscussionComments(discussion.id)" >
+																				<div ng-repeat="comm in discussionComments[discussion.id]" >
+																					<div class="detail-img-name recent-thumb bordbott clearfix">
+																						<img src="{{user.profilepic}}" > 
+																						<span class="feed_user">
+																							<a href="#/people" ng-click="viewProfile(comm.createrid)">{{comm.creatername}} </a>
+																							<p class="comdetails">{{comm.comment}}</p>
+																						</span>									
+																						<div class="date-time"> <a href="#">flag</a> posted on  {{convertTime(comm.createdAt)}} </div>
+																					</div>
+																				</div>
+																			</div>
+
+																			<img src="{{user.profilepic}}" >
+																			<textarea id="f{{discussion.id}}" placeholder="Comments..."></textarea>
+																			<button class="btn btn-primary" type="submit" ng-click="createDiscussionCommnets(discussion.id)">Post</button>
+										  							</div>					
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+								</section>			
+												</div>
+											</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- page end-->
+		</section>
+	</section>
+	<!--main content end-->
+<!--right sidebar start-->
+
+<!--right sidebar end-->
+
+</section>	 
+
+<!--Add Colaborator  Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="addColaborator" class="modal fade" >
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title">Add Colaborators</h4>
+	  </div>
+		<form ng-submit="addColaborator()" role="form-horizontal" id="createnoteform" >
+		  <div class="modal-body">        
+			<div class="form-group">
+				<p>Add Members to Project {{projectAtt.projectname}}</p>
+			</div>									
+					<div class="form-group">
+						<p>Invite</p>
+						<div class="all_tags">
+							<div class="create_me">
+								<div class="tag_cont"></div>
+								<ul source="colaUserSugg" id="invite_tags_ul" class="tagit-field" targetitem="invite_tags"></ul>
+								<input type="text" style="display:none" id="invite_tags"/>
+							</div>
+							<div class="clr"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<p>Message Subject</p>
+						<div class="all_tags">
+							<div class="create_me">
+								<input type="text" id="message_subject"/>
+							</div>
+							<div class="clr"></div>
+						</div>
+					</div>
+					<div class="compose-editor">
+				<p>Message Body</p>
+			  <textarea wysihtml5 class="form-control" rows="9" id="message_body"></textarea>
+			</div>					
+		  </div>
+		  <div class="modal-footer">
+			<button class="btn btn-default" type="submit">Add Members </button>
+			<button type="button" id="closeaddcolaboration" class="btn btn-success" data-dismiss="modal" ng-click="removeEntry()" aria-hidden="true">Cancel</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!--Add Colaborator  Modal -->
+
+ 
+<!--Note  Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myNote" class="modal fade" >
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title">Create New Note</h4>
+	  </div>
+		<form role="form-horizontal" id="createnoteform" >
+		  <div class="modal-body">        
+			<div class="form-group">
+				<span class="note_type active_ntype">RAW DATA</span>
+				<span class="note_type">PROCESSED DATA</span>
+				<span class="note_type">FINAL DATA</span>
+			</div>
+					<div class="form-group">	
+						<p>Enter New Note here</p>
+						<input type="text" id="my_note"  name="my_note" id="my_note" placeholder="New Note"  class="form-control placeholder-no-fix">
+					</div>									
+					<div class="form-group">
+						<p>Tags</p>
+						<div class="all_tags">
+							<div class="create_me">
+								<div class="tag_cont"></div>
+								<ul tagit  source="tagssuggestions" id="note_tags" class="tagit-field" targetitem="get_data_note"></ul>
+								<input type="text" style="display:none" id="get_data_note"/>
+							</div>
+							<div class="clr"></div>
+						</div>
+					</div>
+					<div class="compose-editor">
+				<p>Discription</p>
+			  <textarea wysihtml5 class="form-control" rows="9" id="note_desc"></textarea>
+			</div>
+					<div id="upload" fileupload class="project_upload">     
+						<div id="drop" class="project_drop" >
+							<span>Drop Here</span><strong>&nbsp;</strong>
+							<a>Browse</a>
+							<input type="file" name="projectfile_note" id="projectfile_note" multiple />
+						</div>
+						<ul>
+							<!-- The file uploads will be shown here -->
+						</ul>
+					</div>
+		  </div>
+		  <div class="modal-footer">
+			<button class="btn btn-default" ng-click="createnote(1)" type="submit">Publish</button>
+			<button class="btn btn-default" ng-click="createnote(0)" type="submit">Save Draft</button>
+			<button type="button" id="closecreatenote" class="btn btn-success" data-dismiss="modal" ng-click="removeEntry()" aria-hidden="true">Close</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!--Note  Modal -->
+
+
+<!--Litrature Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myLitrature" class="modal fade" >
+	<div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title">Create New Literature</h4>
+	  </div>
+	  <form role="form-horizontal" id="createlitratureform" >
+		  <div class="modal-body">				
+					<div class="form-group">	
+						<p>Enter New Literature here</p>
+						<input type="text" id="my_litrature"  name="my_litrature" id placeholder="New Litrature"  class="form-control placeholder-no-fix">
+					</div>
+					<div class="form-group">
+						<p>Tags</p>
+						<div class="all_tags">
+							<div class="create_me">
+								<div class="tag_cont"></div>
+								<ul tagit  source="tagssuggestions" id="litrature_tags" class="tagit-field" targetitem="get_data_lit"></ul>
+								<input type="text" style="display:none" id="get_data_lit"/>
+							</div>
+							<div class="clr"></div>
+						</div>
+					</div>
+					<div class="compose-editor">
+				<p>Abstarct</p>
+			  <textarea wysihtml5 class="form-control" rows="9" id="litrature_abs"></textarea>
+			</div>
+					<div class="compose-editor">
+				<p>Highlight</p>
+			  <textarea wysihtml5 class="form-control"  rows="9" id="litrature_high"></textarea>
+					</div>
+					<div id="upload" fileupload class="project_upload">
+						<div id="drop" class="project_drop" >
+							<span>Drop Here</span><strong>&nbsp;</strong>
+							<a>Browse</a>
+							<input type="file" name="projectfile" id="projectfile_literature" multiple />
+						</div>
+						<ul>
+							<!-- The file uploads will be shown here -->
+						</ul>
+					</div>				
+			</div>
+		  <div class="modal-footer">
+			<button class="btn btn-default" ng-click="createlitrature(1)" type="button">Publish</button>
+			<button class="btn btn-default" ng-click="createlitrature(0)" type="button">Save Draft</button>
+			<button type="button" id="closecreatelitrature" class="btn btn-success" data-dismiss="modal" ng-click="removeEntry()" aria-hidden="true">Close</button>
+		  </div>
+		</form>
+	</div>
+  </div>
+</div>
+<!--Litrature Modal -->
+		  
+<!--Protocol Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myprotocol" class="modal fade" >
+  <div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		  <h4 class="modal-title">Create New Protocol</h4>
+		</div>
+		<form role="form-horizontal" id="createprotocolform" >
+			<div class="modal-body">			
+					<div class="form-group">	
+						<p>Enter New Protocol here</p>
+					<input type="text" id="my_protocol"  name="my_protocol" id placeholder="New Protocol"  class="form-control placeholder-no-fix">
+					</div>
+					<div class="form-group">
+						<p>Tags</p>
+						<div class="all_tags">
+							<div class="create_me">
+								<div class="tag_cont"></div>
+								<ul tagit  source="tagssuggestions" id="protocol_tags" class="tagit-field" targetitem="get_data_pro"></ul>
+								<input type="text" style="display:none" id="get_data_pro"/>
+							</div>
+							<div class="clr"></div>
+						</div>
+					</div>
+			  <div class="compose-editor">
+				<p>MATERIALS</p>
+				<textarea wysihtml5 class="form-control"  rows="9" id="protocol_mat"></textarea>
+			  </div>
+					<div class="compose-editor">
+						<p>PROCEDURE</p>
+						<textarea wysihtml5 class="form-control"  rows="9" id="protocol_pro"></textarea>
+					</div>
+					<div id="upload" fileupload class="project_upload">
+				<div id="drop" class="project_drop" >
+							<span>Drop Here</span><strong>&nbsp;</strong>
+							<a>Browse</a>
+							<input type="file" name="projectfile" id="projectfile_protocol" multiple />
+						</div>
+						<ul>
+							<!-- The file uploads will be shown here -->
+						</ul>
+					</div>			
+			</div>
+			<div class="modal-footer">
+			  <button class="btn btn-default" ng-click="createprotocol(1)" type="button">Publish</button>
+			  <button class="btn btn-default" ng-click="createprotocol(0)" type="button">Save Draft</button>
+			  <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="removeEntry()" id="closecreateprotocol" aria-hidden="true">Close</button>
+			</div>
+		</form>
+	</div>
+	</div>
+</div>
+<!--Protocol Modal -->
+		  
+<!-- experimental Modall -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myexperiment" class="modal fade" >
+	<div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title">Create New Experiment</h4>
+	  </div>
+	  <form role="form-horizontal" id="createexperimentform" >
+		  <div class="modal-body">      	
+					<div class="form-group">	
+			  <p>Enter New Experiment here</p>
+			  <input type="text" id="my_experiment"  name="my_experiment" id placeholder="New Experiment"  class="form-control placeholder-no-fix">
+					</div>
+					<div class="form-group">
+						<p>Tags</p>
+						<div class="all_tags">
+							<div class="create_me">
+								<div class="tag_cont"></div>
+								<ul tagit  source="tagssuggestions" id="experiment_tags" class="tagit-field" targetitem="get_data_exp"></ul>
+								<input type="text" style="display:none" id="get_data_exp"/>
+							</div>
+							<div class="clr"></div>
+						</div>
+					</div>
+			<div class="compose-editor">
+				<p>BACKGROUND</p>
+			  <textarea wysihtml5 class="form-control"  rows="9" id="experimet_bg"></textarea>
+			</div>
+					<div class="compose-editor">
+					<p>RESULTS</p>
+					<textarea wysihtml5 class="form-control"  rows="9" id="experimet_res"></textarea>
+			</div>
+					<div class="compose-editor">
+				<p>CONCLUSIONS</p>
+			  <textarea wysihtml5 class="form-control"  rows="9" id="experimet_con"></textarea>
+			</div>
+					<div id="upload" fileupload class="project_upload">
+						<div id="drop" class="project_drop" >
+							<span>Drop Here</span><strong>&nbsp;</strong>
+							<a>Browse</a>
+							<input type="file" name="projectfile" id="projectfile_experiment" multiple />
+						</div>
+						<ul>
+							<!-- The file uploads will be shown here -->
+						</ul>
+					</div>				
+		  </div>
+		  <div class="modal-footer">
+		    <button class="btn btn-default" type="button" ng-click="createexperiment(1)">Publish</button>
+			<button class="btn btn-default" type="button" ng-click="createexperiment(0)">Save Draft</button>
+			<button type="button" id="closecreateexperiment" class="btn btn-success" data-dismiss="modal" ng-click="removeEntry()" aria-hidden="true">Close</button>
+		  </div>
+	  </form>
+	</div>
+  </div>
+</div>
+<!-- experimental Modall -->
+
+<script>
+$(document).ready(function(e) {	
+	$(".dashborad-nav").click(function(){
+		$(this).toggleClass("active");
+		$(".dashboard-wrap").slideToggle();
+	});	
+	$('.put-comment').click(function(){
+		$(this).parents().children('.comments-box').slideToggle();	
+	});
+	$("#typeo_msdd .ddlabel").change(function(){});
+	var typeodd = $("#typeo").msDropdown().data("dd");
+	typeodd.on("change", function() {
+		var acttypeof = $('#typeo_child .selected').text();
+		if(acttypeof != 'Display all'){
+			$('.all_note').hide();
+			$('.' + acttypeof ).show();
+		}
+		else{
+			$('.all_note').show();
+		}
+	});
+	$("#authorn").msDropdown({roundedBorder:false});
+	$("#tags").msDropdown({roundedBorder:false});
+	$("#datas").msDropdown({roundedBorder:false});
+	$("#shortedby").msDropdown({roundedBorder:false});
+	$("#project_mode").msDropdown({roundedBorder:false})
+	var oDropdown = $("#authorn").msDropdown().data("dd");
+	$('#project_mode').change(function(){
+	var project_mode_val = $('#project_mode option:selected').text();
+		if(project_mode_val == 'Open'){
+			$('.open_drop').show();
+		}
+		else{
+			$('.open_drop').hide();			
+		}
+	});
+	$('.das_btns').click(function(){
+		var oDropdown = $("#project_mode").msDropdown().data("dd");
+		//oDropdown.set("selectedIndex", 0);
+		oDropdown.refresh();
+	});
+
+	// Get the type for notes start
+	$(document).on('click', '.note_type', 'click',function(){
+		$('.note_type').removeClass('active_ntype');
+		$(this).addClass('active_ntype');
+	});
+});
+</script>

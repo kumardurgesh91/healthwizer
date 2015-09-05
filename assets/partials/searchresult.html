@@ -1,0 +1,134 @@
+<section class="wrapper">
+  <!-- page start-->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-md-12">
+            <section class="panel news_feed">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="new_feedlist">
+                  <section id="flip-scroll">
+                    <table class="table table-striped new_feedtable">
+                      <thead class="news_feed_header">
+                        <tr>
+                          <th colspan="2"><h3>Search result for "{{searchQuery}}"</h3></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <style>
+                            .ui-match { background: yellow; }
+                          </style>
+                          <tr ng-if="searchresult.userResult.length > 0">
+                            <td colspan="2" style="text-align:center"><h3>Users</h3></td>
+                          </tr>
+                          <tr ng-repeat="foo in searchresult.userResult">
+                            <td width="25" class="feed_pic" valign="middle">
+                              <img src="{{foo.profilepic}}">
+                            </td>
+                            <td>
+                              <span class="feed_user">
+                                <a href='#/people' ng-click='viewProfile(foo.id)' class='activity_link'>
+                                <span dynamic="foo.firstname != '' ? (foo.firstname | highlight : searchQuery : false) : ''"></span>
+                                <span dynamic="foo.lastname != '' ? (foo.lastname | highlight : searchQuery : false) : ''">
+                                </a>
+                                
+                              </span> 
+                              <span class="news_feed_post" dynamic="foo.aboutme != '' ? (foo.aboutme | highlight : searchQuery : false) : ''"></span>
+                              <span dynamic="foo.city != '' ? (foo.city | highlight : searchQuery : false) : ''"></span>
+                                <span dynamic="foo.country != '' ? (foo.country | highlight : searchQuery : false) : ''">
+                              
+                              <div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+                              </div>          
+                            </td>
+                          </tr>
+
+                          <tr ng-if="searchresult.labbookResult.length > 0">
+                            <td colspan="2" style="text-align:center"><h3>Lab Book's</h3></td>
+                          </tr>
+
+                          <tr ng-repeat="foo in searchresult.labbookResult">
+                          
+                            <td width="25" class="feed_pic" valign="middle">
+                              <img src="{{findProfilepicUrl(foo.createrid)}}">
+                            </td>
+                            <td>
+                              <span class="feed_user" dynamic="foo.name != '' ? (foo.name | highlight : searchQuery : false) : ''">
+                              </span> 
+                              <span class="news_feed_post">Created By : <span dynamic="foo.creater"></span></span>
+                              <span>Tags : <span class="news_feed_date" dynamic="foo.tags !='' ? (foo.tags | highlight : searchQuery : false) : ''"></span></span>
+                              
+                              <div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+                              </div>          
+                            </td>
+
+                          </tr>
+
+                          <tr ng-if="searchresult.projectResult.length > 0">
+                            <td colspan="2" style="text-align:center"><h3>Project's</h3></td>
+                          </tr>
+
+                          <tr ng-repeat="foo in searchresult.projectResult">
+                          
+                            <td width="25" class="feed_pic" valign="middle">
+                            </td>
+                            <td>
+                              <span class="feed_user" dynamic="foo.projectname != '' ? (foo.projectname | highlight : searchQuery : false) : ''">
+                              </span> 
+                              <span class="news_feed_post">Created By : <span dynamic="foo.username"></span></span>
+                              <span>Project Type : <span class="news_feed_date">
+                              {{foo.projecttype == 0 ? ('Commercial & Modifiable' | highlight : searchQuery : false) : foo.projecttype == 1 ? ('Commercial & Modifiable-Alike'| highlight : searchQuery : false) : foo.projecttype == 2 ? ('Commercial & Not Modifiable' | highlight : searchQuery : false) : foo.proojecttype == 3 ? ('Not Commercial & Modifiable'| highlight : searchQuery : false) : foo.projecttype == 4 ? ('Not Commercial & Modifiable-Alike'| highlight : searchQuery : false) : foo.projecttype == 5 ? ('Not Commercial & Not Modifiable'| highlight : searchQuery : false) : 'No Type'}}
+                              </span></span>
+                              
+                              <div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+                              </div>          
+                            </td>
+
+                          </tr>
+
+                          <tr ng-if="searchresult.discussionResult.length > 0">
+                            <td colspan="2" style="text-align:center"><h3>Discussion's</h3></td>
+                          </tr>
+
+                          <tr ng-repeat="foo in searchresult.discussionResult">
+                          
+                            <td width="25" class="feed_pic" valign="middle">
+                              <img src="{{findProfilepicUrl(foo.createrid)}}">
+                            </td>
+                            <td>
+                              <span class="feed_user" dynamic="foo.title != '' ? (foo.title| highlight : searchQuery : false) :''">
+                              </span> 
+                              <span class="news_feed_post">Created By : 
+                              <a href='#/people' ng-click='viewProfile(foo.id)' class='activity_link'>
+                              <span class="feed_user" dynamic="foo.creatername != '' ? (foo.creatername| highlight : searchQuery : false) :''">
+                              </span> 
+                              </a>
+                              </span>
+                              <span>Description : <span class="news_feed_date" dynamic="foo.description !='' ? (foo.description | highlight : searchQuery : false) : ''"></span></span>
+                              
+                              <div class="detail-img-name recent-thumb bordbott comments-box clearfix">
+                              </div>          
+                            </td>
+
+                          </tr>
+
+                        </tbody>
+                    </table>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- page end-->
+</section>
+</section>
+    <!--main content end-->
+<!--right sidebar start-->
+<!--right sidebar end-->
+
+</section>
+

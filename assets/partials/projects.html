@@ -1,0 +1,366 @@
+<section class="wrapper" >
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="right_cont" style="min-height:500px;">
+          <div class="library_cont clearfix">
+            <div class="library_cont_box pull-left">
+              <a data-toggle="modal" class="das_btns pull-left">
+                <span class="dasbtn_label">Project</span>
+                <span class="das_btn_icons">
+                  <img src="images/pluse_icon.png"  alt="">
+                </span>
+              </a>
+            </div> 
+            <!--
+            <div class="pull-right">
+              <div class="toggle-right-box">
+                <div class="fa fa-bars"></div>
+              </div>            
+            </div>  
+            -->
+          </div>
+          <div class="ibrary_header">
+            <div class="col-md-6, col-sm-6 col-xs-12">
+              <h1>My Project</h1>
+            </div>
+            <div class="col-md-6, col-sm-6 col-xs-12">
+              <div class="das_sp_icons pull-right">
+                <a data-toggle="modal" ng-click="removeEntry1()" href="#addColaborator" class="das_btns sp_dasicons add_usericon" href="javascript:;">Add User</a>
+                <a href="#/project_management" class="das_btns sp_dasicons add_alerticon">Alert</a>
+                <a href="javascript:;" class="das_btns sp_dasicons add_menuicon" ng-click="gridView=false">Menu</a>
+                <a href="javascript:;" class="das_btns sp_dasicons add_moreicon" ng-click="gridView=true">More</a>
+              </div>
+            </div>
+            <div class="clr"></div>
+          </div> 
+          <div class="das_alllist_cont">
+            <div class="das_alllist_header">
+              <div class="col-md-12, col-sm-12 col-xs-12">
+                <div class="das_btns clearfix pull-left">
+                  <div class="dasbtn_label">
+                    <span>Create</span>
+                    <div class="doc_mode">
+                      <ul>
+                        <li><a ng-click="resetProjectForm();" href="#myModal" data-toggle="modal">Project</a></li>
+                        <li><a ng-click="resetProjectForm();" href="javascript:;">Citation List</a></li>
+                        <li><a ng-click="resetProjectForm();" href="javascript:;">Data Table</a></li>
+                        <li><a ng-click="resetProjectForm();" href="javascript:;">Folder</a></li>
+                      </ul>
+                    </div>
+                  </div> 
+                  <div class="das_btn_icons">
+                    <img src="images/arrow_up.png" alt="">
+                    <input type="file" class="ak_upload" id="files_in_multiple_projects" onchange="angular.element(this).scope().uploadFilesInMultipleProject()" multiple>
+                  </div>
+                </div>
+                <div class="search_library">
+                  <input type="text" placeholder="Search Library" ng-model="search_p">
+                  <input  type="image" src="images/search_icon1.png" class="lib_searchicon">
+                </div>
+                <div class="show_all_labopt"></div>
+                <div class="resp_clr"></div>
+                <div class="das_group_btns">
+                  <ul>
+                    <li><a href="javascript:;"><span class="citations_icon">Citations</span></a></li>
+                    <li><a href="javascript:;"><span class="data_sheet_icon">Data Sheet </span></a></li>
+                     <li><a href="javascript:;"><span class="documents_icon">Documents</span></a></li>
+                  </ul>
+                </div>
+                <div class="das_shorted">
+                  <label>Sort By:</label>
+                  <div class="drop_down shortby_opt">
+                    <select msdropdown id="shortedby">
+                      <option>--Select--</option>
+                      <option>Table Headers</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="clr"></div>
+            </div> 
+            <div class="library_list_cont" ng-if="!gridView" data-ng-init = "findprojects()">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th class="project_tbcellh1"></th>
+                    <th class="project_tbcellh2"></th>
+                    <th class="project_tbcellh3">Name</th>
+                    <th class="project_tbcellh4">Creater</th>
+                    <th class="project_tbcellh6">Last Modefied</th>
+                    <th class="project_tbcellh5 center">Action</th>
+                  </tr>
+                </thead>            
+              </table>
+                <div ng-repeat="project in projects | filter:search_p | orderBy:'type':false">
+                  <table class="table table-striped">
+                    <tbody>
+                      <tr >
+                        <td class="project_tbcell1">
+                          <input ng-model="selectedProject[$index].status" ng-change="selectProject(project.id);" type="checkbox">
+                        </td>
+                        <td class="project_tbcell2" style="cursor:pointer" ng-click = "findprojectsfiles(project.id)"><img src="images/daslist_foldericon.png" alt=""></td>
+                        <td class="pra_pro project_tbcell3"><div><a ng-click="findprojectAtt(project)" href="#/project_workspace">{{project.projectname }}</a></div></td>
+                        <td class="project_tbcell4">{{project.username }}</td>
+                        <td class="project_tbcell5"><td>
+                        <td class="project_tbcell6"> {{convertTime(project.updatedAt) }}</td>
+                        <td class="project_tbcell5">
+                          <ul class="action-btns">
+                            <li><a href="#myModal" class="fa fa-edit" ng-click="editProject(project)" title="Edit" data-toggle="modal"></a></li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="inner_fils">
+                    <div ng-repeat="file in fileArr[project.id] " >
+                      <table class="table table-striped" >
+                        <tbody >
+                          <tr>
+                            <td class="project_tbcell1">&nbsp;</td>
+                            <td class="project_tbcell2"><img src="images/file_icon.png" alt=""></td>
+                            <td class="project_tbcell3"><a target="_blank" href="{{file.filepath}}">{{file.filename }}</a></td>
+                            <td class="project_tbcell4" >{{file.creater}}</td>
+                            <td class="project_tbcell5">&nbsp;</td>
+                            <td class="project_tbcell6">{{convertTime(file.updatedAt) }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="gridView" data-ng-init="findprojects()">
+                <div ng-repeat="project in projects | filter:search_p | orderBy:'type':false" class="grid">
+                  <table>
+                    <tr>
+                      <td colspan="2"><i class="fa fa-folder-open-o fa-3x"></i></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span>
+                          <input ng-model="selectedProject[$index].status" ng-change="selectProject(project.id);" type="checkbox">
+                        </span>
+                        <span>
+                          <a ng-click="findprojectAtt(project)" href="#/project_workspace" class="active">{{project.projectname }}
+                          </a>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span style="display:inline-block;cursor:pointer">
+                          <a href="#projectFilesModel" data-toggle="modal" ng-click = "findprojectsfiles(project.id); projectFileId=project.id">
+                            <img src="images/daslist_foldericon.png" alt="">
+                          </a>
+                        </span>
+                        <span style="display:inline-block">
+                          <a href="#myModal" class="fa fa-edit" ng-click="editProject(project)" title="Edit" data-toggle="modal"></a>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span>
+                          {{project.username}}
+                        </span>
+                        |
+                        <span>
+                          {{convertTime(project.updatedAt)}}
+                        </span>
+                        </td>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- page end-->
+  </section>
+</section>
+  
+</section>
+  <!-- Modal -->
+
+
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="projectFilesModel" class="modal fade" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Project Files</h4>
+      </div>
+        <div class="inner_fils">
+        <div ng-if="fileArr[projectFileId].length == 0">
+          <h3>No file found.
+        </div>
+          <div ng-repeat="file in fileArr[projectFileId]" ng-if="fileArr[projectFileId].length > 0">
+            <table class="table table-striped" >
+              <tbody >
+                <tr>
+                  <td class="project_tbcell1">&nbsp;</td>
+                  <td class="project_tbcell2"><img src="images/file_icon.png" alt=""></td>
+                  <td class="project_tbcell3"><a target="_blank" href="{{file.filepath}}">{{file.filename }}</a></td>
+                  <td class="project_tbcell4" >{{file.creater}}</td>
+                  <td class="project_tbcell5">&nbsp;</td>
+                  <td class="project_tbcell6">{{convertTime(file.updatedAt) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Add Colaborator  Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="addColaborator" class="modal fade" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Add Colaborators</h4>
+      </div>
+      <form ng-submit="addColaboratorInMultipeProject()" role="form-horizontal" id="createnoteform" >
+        <div class="modal-body">        
+          <div class="form-group">
+            <p>Add Members to Project {{projectAtt.projectname}}</p>
+          </div>                  
+          <div class="form-group">
+            <p>Invite</p>
+            <div class="all_tags">
+              <div class="create_me">
+                <div class="tag_cont"></div>
+                <ul tagit source="usersuggestions" id="invite_tags_ul" class="tagit-field" targetitem="invite_tags"></ul>
+
+                <input type="text" style="display:none" id="invite_tags"/>
+              </div>
+              <div class="clr"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <p>Message Subject</p>
+            <div class="all_tags">
+              <div class="create_me">
+                <input type="text" id="message_subject"/>
+              </div>
+              <div class="clr"></div>
+            </div>
+          </div>
+          <div class="compose-editor">
+            <p>Message Body</p>
+            <textarea wysihtml5 class="form-control" rows="9" id="message_body"></textarea>
+          </div>          
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" type="submit">Add Members </button>
+          <button type="button" id="closeaddcolaboration" class="btn btn-success" data-dismiss="modal" ng-click="removeEntry()" aria-hidden="true">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--Add Colaborator  Modal -->
+
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="resetProjectForm()">&times;</button>
+            <h4 class="modal-title">Create New Project</h4>
+          </div>
+          <form ng-submit="createProject();" role="form-horizontal" id="projectform" enctype="multipart/form-data">
+            <div class="modal-body">              
+              <div class="form-group">
+                <p>Enter The Project Name</p>
+                <input type="text" id="pro_name"  name="pro_name" id placeholder="Project Name"  class="form-control placeholder-no-fix">
+              </div>
+              <div class="compose-editor">
+                <p>Discription</p>
+                <textarea wysihtml5 class="form-control" rows="9" id="pro_desc"></textarea>
+              </div>
+              <div id="upload" fileupload class="project_upload">
+                <div id="drop" class="project_drop" >
+                  <span>Drop Here</span><strong>&nbsp;</strong>
+                  <a>Browse</a>
+                  <input type="file" name="projectfile" id="projectfile" multiple />
+                </div>
+                <ul>
+                  <!-- The file uploads will be shown here -->
+                </ul>
+              </div>
+              <div class="form-group">
+                <div class="Pro_type">
+                  <select msdropdown id="project_mode">
+                    <option value="none">--Select--</option>
+                    <option value="open">Open</option>
+                    <option value="private">Private</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group open_drop">
+                <div class="Pro_type">
+                  <select msdropdown id="pro_type">
+                    <option value="none">--Select--</option>
+                    <option value="0">Commercial & Modifiable</option>
+                    <option value="1">Commercial & Modifiable-Alike</option>
+                    <option value="2">Commercial & Not Modifiable</option>
+                    <option value="3">Not Commercial & Modifiable</option>
+                    <option value="4">Not Commercial & Modifiable-Alike</option>
+                    <option value="5">Not Commercial & Not Modifiable</option>
+                  </select>
+                </div>
+              </div>            
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="projectId" id="projectId" value="">
+              <button class="btn btn-default" type="submit">Create A project </button>
+              <button id="closeModel" type="button"  class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="resetProjectForm()">Close</button>
+            </div>
+          </form>
+        </div>        
+      </div>
+    </div>
+<!-- modal -->
+
+<script>
+var projects;
+var UPLOAD_PATH = './assets/images/uploadfiles';
+var filepath;
+var filename;
+
+$(document).ready(function(e) {     
+        
+    
+    $('#project_mode').change(function(){
+    
+    var project_mode_val = $('#project_mode option:selected').text();
+    
+        if(project_mode_val == 'Open')
+            {
+                $('.open_drop').show();
+                var oDropdown1 = $("#Pro_type").msDropdown().data("dd");
+            oDropdown1.set("selectedIndex", 0);
+            
+            }
+            else{
+            
+      $('.open_drop').hide();
+    }
+  });
+});
+
+
+
+//
+</script>
